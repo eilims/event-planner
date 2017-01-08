@@ -8,6 +8,7 @@ package com.eventplanner.controller;
 import com.eventplanner.domain.Event;
 import com.eventplanner.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,7 +25,7 @@ public class EventController {
     @Autowired
     private EventService eventService;
     
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     @ResponseBody
     public Event createEvent(String name){
         return eventService.createEvent(name); 
