@@ -25,8 +25,8 @@ public class EventController {
     @Autowired
     private EventService eventService;
     
-    @PostMapping
-    @ResponseBody
+    @PostMapping //For a post 
+    @ResponseBody //Sending data back
     public Event createEvent(String name){
         return eventService.createEvent(name); 
     }
