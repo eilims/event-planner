@@ -5,6 +5,8 @@
  */
 package com.eventplanner.controller;
 
+import com.eventplanner.service.EventService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,10 +19,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 @Controller
 public class EventPageController {
+    @Autowired
+    private EventService eventService;
     
     @GetMapping("events.html")
     public String showPage(@ModelAttribute("model") ModelMap model){
-        model.addAttribute("cookie","anyvalue");
+        model.addAttribute("eventList",eventService.getAllEvents());
         return "events";
     }
 }

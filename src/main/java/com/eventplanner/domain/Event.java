@@ -28,6 +28,10 @@ public class Event implements Serializable {
     public Event(String name) {
         this.name = name;
     }
+    
+    protected Event(){
+        
+    }
 
     public Integer getId() {
         return id;

@@ -7,6 +7,8 @@ package com.eventplanner.service;
 
 import com.eventplanner.domain.Event;
 import com.eventplanner.repo.EventRepository;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,13 +16,19 @@ import org.springframework.stereotype.Service;
  *
  * @author DanielB
  */
-
 @Service
 public class EventService {
+
     @Autowired
     private EventRepository eventRepo;
-    
-    public Event createEvent(String name){
+
+    public Event createEvent(String name) {
         return eventRepo.save(new Event(name));
+    }
+
+    public List<Event> getAllEvents() {
+        List<Event> list = new ArrayList();
+        eventRepo.findAll().forEach(list::add);
+        return list;
     }
 }
