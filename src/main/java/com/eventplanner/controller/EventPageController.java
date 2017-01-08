@@ -5,15 +5,14 @@
  */
 package com.eventplanner.controller;
 
-import com.eventplanner.domain.Event;
 import com.eventplanner.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  *
@@ -34,6 +33,12 @@ public class EventPageController {
     @PostMapping("createEvent") //For a post 
     public String createEvent(String name) {
         eventService.createEvent(name);
+        return "redirect:/events.html";
+    }
+    
+    @PostMapping("deleteEvent/{eventId}")
+    public String deleteEvent(@PathVariable Integer eventId){
+        eventService.deleteEvent(eventId);
         return "redirect:/events.html";
     }
 }

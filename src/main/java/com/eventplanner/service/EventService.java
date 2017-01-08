@@ -31,4 +31,8 @@ public class EventService {
         eventRepo.findAll().forEach(list::add);
         return list;
     }
+    
+    public void deleteEvent(Integer eventId){
+        eventRepo.delete(eventId);
+    }
 }

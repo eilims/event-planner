@@ -14,7 +14,10 @@
 <ol>
 <#list model.eventList as event>
     <li>
-        The event name is ${event.name} and its ID is ${event.id}
+        The event name is ${event.name?html} and its ID is ${event.id}
+        <form name="delevent" action="deleteEvent/${event.id}" method="post">
+        <input type="submit" value="Delete">
+        </form>
     </li>
 </#list>
 </ol>
