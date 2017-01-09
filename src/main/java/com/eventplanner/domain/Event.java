@@ -31,11 +31,15 @@ public class Event implements Serializable {
     
     @Column
     private String description;
+    
+    @Column
+    private String location;
 
-    public Event(String name, String description, int year, int month, int day, int hour, int minute) {
+    public Event(String name, String description,String location, int year, int month, int day, int hour, int minute) {
         this.name = name;
         this.eventDate = LocalDateTime.of(year, month, day, hour, minute);
         this.description = description;
+        this.location = location;
     }
 
     protected Event() {
@@ -71,5 +75,12 @@ public class Event implements Serializable {
         this.description = description;
     }
 
-    
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+  
 }

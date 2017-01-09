@@ -22,8 +22,8 @@ public class EventService {
     @Autowired
     private EventRepository eventRepo;
 
-    public Event createEvent(String name, String description, int year, int month, int day, int hour, int minute) {
-        return eventRepo.save(new Event(name,description, year, month, day, hour, minute));
+    public Event createEvent(String name, String description, String location, int year, int month, int day, int hour, int minute) {
+        return eventRepo.save(new Event(name, description, location, year, month, day, hour, minute));
     }
 
     public List<Event> getAllEvents() {
