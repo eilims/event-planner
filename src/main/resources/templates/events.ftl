@@ -89,6 +89,8 @@
             <br/>
             Description: <input type="text" id="description" name="description" value="Enter Description Here" onClick="clearDescription()">
             <br/>
+            Location: <input type="text" name="location" value="Enter Location Here">
+            <br/>
             <input type="submit" value="   Save   "/>
             </form>
 
