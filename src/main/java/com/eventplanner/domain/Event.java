@@ -28,10 +28,14 @@ public class Event implements Serializable {
 
     @Column
     private LocalDateTime eventDate;
+    
+    @Column
+    private String description;
 
-    public Event(String name, int year, int month, int day, int hour, int minute) {
+    public Event(String name, String description, int year, int month, int day, int hour, int minute) {
         this.name = name;
         this.eventDate = LocalDateTime.of(year, month, day, hour, minute);
+        this.description = description;
     }
 
     protected Event() {
@@ -59,4 +63,13 @@ public class Event implements Serializable {
 
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    
 }
