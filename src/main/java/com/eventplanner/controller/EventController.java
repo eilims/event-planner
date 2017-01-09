@@ -26,8 +26,8 @@ public class EventController {
     
     @PostMapping //For a post 
     @ResponseBody //Sending data back
-    public Event createEvent(String name, int year, int month, int day, int hour, int minute){
-        return eventService.createEvent(name, year, month, day, hour, minute); 
+    public Event createEvent(String name, String description, int year, int month, int day, int hour, int minute){
+        return eventService.createEvent(name,description, year, month, day, hour, minute); 
     }
     
 }
