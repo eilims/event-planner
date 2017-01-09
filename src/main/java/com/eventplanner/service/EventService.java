@@ -22,8 +22,8 @@ public class EventService {
     @Autowired
     private EventRepository eventRepo;
 
-    public Event createEvent(String name) {
-        return eventRepo.save(new Event(name));
+    public Event createEvent(String name, int year, int month, int day, int hour, int minute) {
+        return eventRepo.save(new Event(name, year, month, day, hour, minute));
     }
 
     public List<Event> getAllEvents() {
@@ -31,8 +31,8 @@ public class EventService {
         eventRepo.findAll().forEach(list::add);
         return list;
     }
-    
-    public void deleteEvent(Integer eventId){
+
+    public void deleteEvent(Integer eventId) {
         eventRepo.delete(eventId);
     }
 }

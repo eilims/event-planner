@@ -31,13 +31,13 @@ public class EventPageController {
     }
 
     @PostMapping("createEvent") //For a post 
-    public String createEvent(String name) {
-        eventService.createEvent(name);
+    public String createEvent(String name, int year, int month, int day, int hour, int minute) {
+        eventService.createEvent(name, year, month, day, hour, minute);
         return "redirect:/events.html";
     }
-    
+
     @PostMapping("deleteEvent/{eventId}")
-    public String deleteEvent(@PathVariable Integer eventId){
+    public String deleteEvent(@PathVariable Integer eventId) {
         eventService.deleteEvent(eventId);
         return "redirect:/events.html";
     }
