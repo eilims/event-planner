@@ -71,6 +71,8 @@
 
             Minute: <input type="number" name="minute" min="0" max="59" required/>
             <br/>
+            Description: <input type="text" name="description" value="Enter Description Here">
+            <br/>
             <input type="submit" value="   Save   "/>
             </form>
 
@@ -80,10 +82,11 @@
                 <b>Event: </b>${event.name?html}
                 <b>Date: </b>${event.date.toLocalDate()} 
                 <b>Time: </b>${event.date.toLocalTime()} 
+                <b>Description: </b>${event.description?html()}
 
                 <form name="delevent" action="deleteEvent/${event.id}" method="post">
                     <input type="submit" value="Delete">
-                    </form>
+                </form>
                 </li>
 </#list>
             </ol>
