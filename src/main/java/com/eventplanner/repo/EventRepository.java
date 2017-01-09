@@ -12,7 +12,6 @@ import org.springframework.data.repository.CrudRepository;
  *
  * @author DanielB
  */
+public interface EventRepository extends CrudRepository<Event, Integer> {
 
-public interface EventRepository extends CrudRepository<Event, Integer>{
- 
 }
