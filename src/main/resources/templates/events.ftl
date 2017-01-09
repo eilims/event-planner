@@ -82,7 +82,7 @@
                 <b>Event: </b>${event.name?html}
                 <b>Date: </b>${event.date.toLocalDate()} 
                 <b>Time: </b>${event.date.toLocalTime()} 
-                <b>Description: </b>${event.description?html()}
+                <b>Description: </b>${event.description?html}
 
                 <form name="delevent" action="deleteEvent/${event.id}" method="post">
                     <input type="submit" value="Delete">
