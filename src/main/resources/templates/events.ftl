@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script>
+		<link rel="stylesheet" type="text/css" href="PageStyle.css">
+		<header><b>Add An Event</b></header>
+        <script type="text/javascript">
         function changeDayLimit(){
             var month = document.getElementById("2").value;
             var day = document.getElementById("3");
@@ -19,81 +21,94 @@
             }
         } 
 		
-        var descriptionClick = false;
-        function clearDescription() 
+        var textClick= [0,0,0]
+        function clearText(string, int) 
         {
-            if(!descriptionClick) 
+            if(textClick[int] == 0) 
             {
-                document.getElementById("description").value="";
-                descriptionClick=true;
+                document.getElementById(string).value="";
+                textClick[int]=1;
             }
         }
 
         </script>
+		<br/>
+		<br/>
     </head>
     <body>
+		
+		<form name="event" action="createEvent" method="post" >
+		<table id="table">
+			<tr>
+				<th>Event Name:</th> <td><input type="text" class="long" id="name" name="name" value="Enter Event Name" onClick="clearText('name', 0)" required/><td>
+			</tr>
+			<tr>
+				<th>Description:</th> <td><textarea class="description" id="description" name="description" value="Enter Description" onClick="clearText('description', 1)"></textarea>
+			</tr>
+			<tr>
+				<th>Location:</th> <td><input type="text" class="long" id="location" name="location" value="Enter Location" onClick="clearText('location', 2)" required></td>
+			</tr>
+			
+		</table>
+		<table id="table">
+		<tr>
+				<th>Year:</th> <td><select class="box" id="1" name="year" value= required>
+					<option value="2017">2017</option>
+					<option value="2018">2018</option>
+					<option value="2019">2019</option> 
+					</select></td>
+				<th>Month:</th> <td><select class="box" id="2" name="month" onchange="changeDayLimit()">
+					<option value="1">January</option>
+					<option value="2">February</option>
+					<option value="3">March</option> 
+					<option value="4">April</option>
+					<option value="5">May</option>
+					<option value="6">June</option>
+					<option value="7">July</option> 
+					<option value="8">August</option>
+					<option value="9">September</option>
+					<option value="10">October</option>
+					<option value="11">November</option> 
+					<option value="12">December</option>
+					</select></td>
+				<th>Day:</th> <td><input class="box" id="3" type="number" name="day" min="1" max="31"/></td>
+			</tr>
+			<tr>
+				<th>Hour:</th> <td><select class="box"  name="hour" required>
+					<option value="0">12AM</option>
+					<option value="1">1AM</option>
+					<option value="2">2AM</option>
+					<option value="3">3AM</option> 
+					<option value="4">4AM</option>
+					<option value="5">5AM</option>
+					<option value="6">6AM</option>
+					<option value="7">7AM</option> 
+					<option value="8">8AM</option>
+					<option value="9">9AM</option>
+					<option value="10">10AM</option>
+					<option value="11">11AM</option> 
+					<option value="12">12PM</option>
+					<option value="13">1PM</option>
+					<option value="14">2PM</option>
+					<option value="15">3PM</option> 
+					<option value="16">4PM</option>
+					<option value="17">5PM</option>
+					<option value="18">6PM</option>
+					<option value="19">7PM</option> 
+					<option value="20">8PM</option>
+					<option value="21">9PM</option>
+					<option value="22">10PM</option>
+					<option value="23">11PM</option>
+					</select></td>
 
-        <form name="event" action="createEvent" method="post">
-            Event Name: <input type="text" name="name" required/>
-            <br/>
-            Year: <select id="1" name="year" required>
-                <option value="2017">2017</option>
-                <option value="2018">2018</option>
-                <option value="2019">2019</option> 
-                </select>
-            Month: <select id="2" name="month" onchange="changeDayLimit()">
-                <option value="1">January</option>
-                <option value="2">February</option>
-                <option value="3">March</option> 
-                <option value="4">April</option>
-                <option value="5">May</option>
-                <option value="6">June</option>
-                <option value="7">July</option> 
-                <option value="8">August</option>
-                <option value="9">September</option>
-                <option value="10">October</option>
-                <option value="11">November</option> 
-                <option value="12">December</option>
-                </select>
-            Day: <input id="3" type="number" name="day" min="1" max="31"/>
-
-            <br/>
-            Hour: <select name="hour" required>
-                <option value="0">12AM</option>
-                <option value="1">1AM</option>
-                <option value="2">2AM</option>
-                <option value="3">3AM</option> 
-                <option value="4">4AM</option>
-                <option value="5">5AM</option>
-                <option value="6">6AM</option>
-                <option value="7">7AM</option> 
-                <option value="8">8AM</option>
-                <option value="9">9AM</option>
-                <option value="10">10AM</option>
-                <option value="11">11AM</option> 
-                <option value="12">12PM</option>
-                <option value="13">1PM</option>
-                <option value="14">2PM</option>
-                <option value="15">3PM</option> 
-                <option value="16">4PM</option>
-                <option value="17">5PM</option>
-                <option value="18">6PM</option>
-                <option value="19">7PM</option> 
-                <option value="20">8PM</option>
-                <option value="21">9PM</option>
-                <option value="22">10PM</option>
-                <option value="23">11PM</option>
-                </select>
-
-            Minute: <input type="number" name="minute" min="0" max="59" required/>
-            <br/>
-            Description: <input type="text" id="description" name="description" value="Enter Description Here" onClick="clearDescription()">
-            <br/>
-            Location: <input type="text" name="location" value="Enter Location Here">
-            <br/>
-            <input type="submit" value="   Save   "/>
-            </form>
-
+				<th>Minute:</th> <td><input type="number" class="box" name="minute" min="0" max="59" required/></td>
+			</tr>
+			<tr>
+				<td><input type="submit" class="box" value="   Save   "/></td>
+			</tr>
+		</table>
+		</form>
+        
         </body>
     </html>
 
