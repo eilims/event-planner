@@ -5,16 +5,32 @@
         function changeDayLimit(){
             var month = document.getElementById("2").value;
             var day = document.getElementById("3");
-            if(month == 2){
+            if(month == 2)
+			{
                 day.max = 28;
-            } else if(month%2 == 0){
+            } 
+			else if(month%2 == 0)
+			{
                 day.max = 30;
-            } else {
+            } 
+			else 
+			{
                 day.max = 31;
             }
         } 
+		
+        var descriptionClick = false;
+        function clearDescription() 
+        {
+            if(!descriptionClick) 
+            {
+                document.getElementById("description").value="";
+                descriptionClick=true;
+            }
+        }
+
         </script>
-        </head>
+    </head>
     <body>
 
         <form name="event" action="createEvent" method="post">
@@ -71,10 +87,16 @@
 
             Minute: <input type="number" name="minute" min="0" max="59" required/>
             <br/>
-            Description: <input type="text" name="description" value="Enter Description Here">
+            Description: <input type="text" id="description" name="description" value="Enter Description Here" onClick="clearDescription()">
+            <br/>
+            Location: <input type="text" name="location" value="Enter Location Here">
             <br/>
             <input type="submit" value="   Save   "/>
             </form>
+
+        </body>
+    </html>
+
 
         <ol>
 <#list model.eventList as event>
@@ -86,7 +108,7 @@
 
                 <form name="delevent" action="deleteEvent/${event.id}" method="post">
                     <input type="submit" value="Delete">
-                </form>
+                    </form>
                 </li>
 </#list>
             </ol>
