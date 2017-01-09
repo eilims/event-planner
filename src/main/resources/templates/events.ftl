@@ -39,7 +39,7 @@
                 <option value="11">November</option> 
                 <option value="12">December</option>
                 </select>
-            Day: <input id="3" type="number" name="day" min="1" max="28"/>
+            Day: <input id="3" type="number" name="day" min="1" max="31"/>
 
             <br/>
             Hour: <select name="hour" required>
