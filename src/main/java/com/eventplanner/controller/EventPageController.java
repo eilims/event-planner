@@ -45,10 +45,20 @@ public class EventPageController {
         eventService.deleteEvent(eventId);
         return "redirect:/events.html";
     }
-    
+
     @PostMapping("addMember/{eventId}")
-    public String addMember(@PathVariable Integer eventId, Integer memberId){
+    public String addMember(@PathVariable Integer eventId, Integer memberId) {
         eventService.addMember(eventId, memberId);
         return "redirect:/events.html";
+    }
+
+    @PostMapping("updateEvent/{eventId}")
+    public String updateEvent(@PathVariable Integer eventId, String name, String description, String location,
+            int startYear, int startMonth, int startDay, int startHour, int startMinute,
+            int endYear, int endMonth, int endDay, int endHour, int endMinute) {
+        eventService.updateEvent(eventId, name, description, location,
+                startYear, startMonth, startDay, startHour, startMinute,
+                endYear, endMonth, endDay, endHour, endMinute);
+        return "redirect:/event.html";
     }
 }
