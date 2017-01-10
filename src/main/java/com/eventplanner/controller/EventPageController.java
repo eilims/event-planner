@@ -45,4 +45,10 @@ public class EventPageController {
         eventService.deleteEvent(eventId);
         return "redirect:/events.html";
     }
+    
+    @PostMapping("addMember/{eventId}")
+    public String addMember(@PathVariable Integer eventId, Integer memberId){
+        eventService.addMember(eventId, memberId);
+        return "redirect:/events.html";
+    }
 }

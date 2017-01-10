@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -42,7 +43,7 @@ public class Event implements Serializable {
     @Column
     private Integer eventGroupId;
 
-    @Column
+    @ElementCollection 
     private List<Integer> attendeeList;
 
     public Event(String name, String description, String location,
@@ -71,11 +72,11 @@ public class Event implements Serializable {
         this.name = name;
     }
 
-    public LocalDateTime getDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setStartDate(LocalDateTime date) {
         this.startDate = date;
 
     }
@@ -104,11 +105,11 @@ public class Event implements Serializable {
         this.startDate = eventDate;
     }
 
-    public LocalDateTime getEndTime() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndTime(LocalDateTime endTime) {
+    public void setEndDate(LocalDateTime endTime) {
         this.endDate = endTime;
     }
 
