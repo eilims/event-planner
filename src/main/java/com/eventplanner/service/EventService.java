@@ -39,4 +39,8 @@ public class EventService {
     public void deleteEvent(Integer eventId) {
         eventRepo.delete(eventId);
     }
+    
+    public void addMember(Integer eventId, Integer memberId){
+        eventRepo.findOne(eventId).getAttendeeList().add(memberId);
+    }
 }
