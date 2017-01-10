@@ -173,18 +173,19 @@
         <b>Start Time: </b>${event.startDate.toLocalTime()} 
         <b>End Date: </b>${event.endDate.toLocalDate()} 
         <b>End Time: </b>${event.endDate.toLocalTime()} 
+        <b>Description: </b>${event.description?html}
         <form name="member" action="addMember/${event.id}" method="post">
             MemberId: <input type="number" name="memberId" min="0"/>
             <input type="submit" value="Add"/>
         </form>
-            <ol>
-                    <#list event.getAttendeeList() as members>
+        <ol>
+            <#list event.getAttendeeList() as members>
                 <li>
                     <b>Member: </b>${members}
-                    </li>
-                    </#list>
-                </ol>
-        <b>Description: </b>${event.description?html}
+                </li>
+            </#list>
+        </ol>
+        
         <form name="delevent" action="deleteEvent/${event.id}" method="post">
             <input type="submit" value="Delete">
         </form>
