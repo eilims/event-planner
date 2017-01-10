@@ -20,12 +20,12 @@
         <form name="event" action="createEvent" method="post">
             Event Name: <input type="text" name="name" required/>
             <br/>
-            Year: <select id="1" name="startYear" required>
+            Year: <select id="1" name="year" required>
                 <option value="2017">2017</option>
                 <option value="2018">2018</option>
                 <option value="2019">2019</option> 
                 </select>
-            Month: <select id="2" name="startMonth" onchange="changeDayLimit()">
+            Month: <select id="2" name="month" onchange="changeDayLimit()">
                 <option value="1">January</option>
                 <option value="2">February</option>
                 <option value="3">March</option> 
@@ -39,10 +39,10 @@
                 <option value="11">November</option> 
                 <option value="12">December</option>
                 </select>
-            Day: <input id="3" type="startNumber" name="day" min="1" max="31"/>
+            Day: <input id="3" type="number" name="day" min="1" max="31"/>
 
             <br/>
-            Hour: <select name="startHour" required>
+            Hour: <select name="hour" required>
                 <option value="0">12AM</option>
                 <option value="1">1AM</option>
                 <option value="2">2AM</option>
@@ -69,7 +69,7 @@
                 <option value="23">11PM</option>
                 </select>
 
-            Minute: <input type="number" name="startMinute" min="0" max="59" required/>
+            Minute: <input type="number" name="minute" min="0" max="59" required/>
             <br/>
             Description: <input type="text" name="description" value="Enter Description Here">
             <br/>
