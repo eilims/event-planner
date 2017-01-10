@@ -76,9 +76,8 @@ public class Event implements Serializable {
         return startDate;
     }
 
-    public void setStartDate(LocalDateTime date) {
-        this.startDate = date;
-
+    public void setStartDate(int year, int month, int day, int hour, int minute) {
+        this.startDate = LocalDateTime.of(year, month, day, hour, minute);
     }
 
     public String getDescription() {
@@ -97,20 +96,12 @@ public class Event implements Serializable {
         this.location = location;
     }
 
-    public LocalDateTime getEventDate() {
-        return startDate;
-    }
-
-    public void setEventDate(LocalDateTime eventDate) {
-        this.startDate = eventDate;
-    }
-
     public LocalDateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDateTime endTime) {
-        this.endDate = endTime;
+    public void setEndDate(int year, int month, int day, int hour, int minute) {
+        this.endDate = LocalDateTime.of(year, month, day, hour, minute);
     }
 
     public List<Integer> getAttendeeList() {
