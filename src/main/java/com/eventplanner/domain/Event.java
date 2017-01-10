@@ -7,6 +7,7 @@ package com.eventplanner.domain;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,19 +28,31 @@ public class Event implements Serializable {
     private String name;
 
     @Column
-    private LocalDateTime eventDate;
-    
+    private LocalDateTime startDate;
+
     @Column
     private String description;
-    
+
     @Column
     private String location;
 
-    public Event(String name, String description,String location, int year, int month, int day, int hour, int minute) {
+    @Column
+    private LocalDateTime endDate;
+
+    @Column
+    private Integer eventGroupId;
+
+    @Column
+    private List<Integer> attendeeList;
+
+    public Event(String name, String description, String location,
+            int startYear, int startMonth, int startDay, int startHour, int startMinute,
+            int endYear, int endMonth, int endDay, int endHour, int endMinute) {
         this.name = name;
-        this.eventDate = LocalDateTime.of(year, month, day, hour, minute);
+        this.startDate = LocalDateTime.of(startYear, startMonth, startDay, startHour, startMinute);
         this.description = description;
         this.location = location;
+        this.endDate = LocalDateTime.of(endYear, endMonth, endDay, endHour, endMinute);
     }
 
     protected Event() {
@@ -59,11 +72,11 @@ public class Event implements Serializable {
     }
 
     public LocalDateTime getDate() {
-        return eventDate;
+        return startDate;
     }
 
     public void setDate(LocalDateTime date) {
-        this.eventDate = date;
+        this.startDate = date;
 
     }
 
@@ -82,5 +95,36 @@ public class Event implements Serializable {
     public void setLocation(String location) {
         this.location = location;
     }
-  
+
+    public LocalDateTime getEventDate() {
+        return startDate;
+    }
+
+    public void setEventDate(LocalDateTime eventDate) {
+        this.startDate = eventDate;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endDate;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endDate = endTime;
+    }
+
+    public List<Integer> getAttendeeList() {
+        return attendeeList;
+    }
+
+    public void setAttendeeList(List<Integer> attendeeList) {
+        this.attendeeList = attendeeList;
+    }
+
+    public Integer getEventGroupId() {
+        return eventGroupId;
+    }
+
+    public void setEventGroupId(Integer eventGroupId) {
+        this.eventGroupId = eventGroupId;
+    }
 }
