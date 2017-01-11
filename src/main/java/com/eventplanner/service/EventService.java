@@ -7,7 +7,6 @@ package com.eventplanner.service;
 
 import com.eventplanner.domain.Event;
 import com.eventplanner.repo.EventRepository;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
