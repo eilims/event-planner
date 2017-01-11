@@ -31,10 +31,10 @@ public class EventPageController {
     }
 
     @PostMapping("createEvent") //For a post 
-    public String createEvent(String name, String description, String location,
+    public String createEvent(String name, Integer eventGroupId, String description, String location,
             int startYear, int startMonth, int startDay, int startHour, int startMinute,
             int endYear, int endMonth, int endDay, int endHour, int endMinute) {
-        eventService.createEvent(name, description, location,
+        eventService.createEvent(name, eventGroupId, description, location,
                 startYear, startMonth, startDay, startHour, startMinute,
                 endYear, endMonth, endDay, endHour, endMinute);
         return "redirect:/events.html";

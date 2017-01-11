@@ -5,13 +5,13 @@
  */
 package com.eventplanner.repo;
 
-import com.eventplanner.domain.Event;
+import com.eventplanner.domain.EventMember;
 import org.springframework.data.repository.CrudRepository;
 
 /**
  *
  * @author DanielB
  */
-public interface EventRepository extends CrudRepository<Event, Integer> {
-    Event findByIdAndEventGroupId(Integer id, Integer eventGroupId);
+public interface EventMemberRepository extends CrudRepository<EventMember, Integer>{
+    
 }
