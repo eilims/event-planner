@@ -46,7 +46,7 @@ public class Event implements Serializable {
     @ElementCollection 
     private List<Integer> attendeeList;
 
-    public Event(String name, String description, String location,
+    public Event(String name, Integer eventGroupId, String description, String location,
             int startYear, int startMonth, int startDay, int startHour, int startMinute,
             int endYear, int endMonth, int endDay, int endHour, int endMinute) {
         this.name = name;
@@ -54,6 +54,7 @@ public class Event implements Serializable {
         this.description = description;
         this.location = location;
         this.endDate = LocalDateTime.of(endYear, endMonth, endDay, endHour, endMinute);
+        this.eventGroupId = eventGroupId;
     }
 
     protected Event() {

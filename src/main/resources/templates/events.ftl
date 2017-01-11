@@ -156,6 +156,7 @@
                 <th>Minute:</th> <td><input type="number" class="box" name="endMinute" min="0" max="59" required/></td>
                 </tr>
             <tr>
+                Group ID: <input type="number" name="eventGroupId" min="0"/>
                 <td><input type="submit" class="box" value="   Save   "/></td>
                 </tr>
             </table>

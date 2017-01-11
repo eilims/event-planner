@@ -22,29 +22,17 @@ public class EventService {
     @Autowired
     private EventRepository eventRepo;
 
-    public Event createEvent(String name, String description, String location,
+    public Event createEvent(String name, Integer eventGroupId, String description, String location,
             int startYear, int startMonth, int startDay, int startHour, int startMinute,
             int endYear, int endMonth, int endDay, int endHour, int endMinute) {
-        return eventRepo.save(new Event(name, description, location,
+        //Add duplicate name here
+        return eventRepo.save(new Event(name, eventGroupId, description, location,
                 startYear, startMonth, startDay, startHour, startMinute,
                 endYear, endMonth, endDay, endHour, endMinute));
     }
 
-    public List<Event> getAllEvents() {
-        List<Event> list = new ArrayList();
-        eventRepo.findAll().forEach(list::add);
-        return list;
-    }
-
     public void deleteEvent(Integer eventId) {
         eventRepo.delete(eventId);
-    }
-
-    public void addMember(Integer eventId, Integer memberId) {
-        //Temporary test method
-        Event event = eventRepo.findOne(eventId);
-        event.getAttendeeList().add(memberId);
-        eventRepo.save(event);
     }
 
     public void updateEvent(Integer eventId, String name, String description, String location,
@@ -56,6 +44,31 @@ public class EventService {
         event.setLocation(location);
         event.setStartDate(startYear, startMonth, startDay, startHour, startMinute);
         event.setEndDate(endYear, endMonth, endDay, endHour, endMinute);
+        eventRepo.save(event);
+    }
+    
+    public List findMemberEvents(List<Integer> eventList){
+        List<Event> list = new ArrayList();
+        eventList.forEach(item -> list.add(eventRepo.findOne(item)));
+        return list;
+    }
+    
+    public List findGroupEvents(Integer groupId, List<Integer> eventList){
+        List<Event> list = new ArrayList();
+        eventList.forEach(item -> list.add(eventRepo.findByIdAndEventGroupId(item,groupId)));
+        return list;
+    }
+
+    public List<Event> getAllEvents() {
+        List<Event> list = new ArrayList();
+        eventRepo.findAll().forEach(list::add);
+        return list;
+    }
+
+    public void addMember(Integer eventId, Integer memberId) {
+        //Temporary test method
+        Event event = eventRepo.findOne(eventId);
+        event.getAttendeeList().add(memberId);
         eventRepo.save(event);
     }
 }

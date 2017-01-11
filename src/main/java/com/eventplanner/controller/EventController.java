@@ -26,10 +26,10 @@ public class EventController {
 
     @PostMapping //For a post 
     @ResponseBody //Sending data back
-    public Event createEvent(String name, String description, String location,
+    public Event createEvent(String name, Integer groupEventId, String description, String location,
             int startYear, int startMonth, int startDay, int startHour, int startMinute,
             int endYear, int endMonth, int endDay, int endHour, int endMinute) {
-        return eventService.createEvent(name, description, location,
+        return eventService.createEvent(name, groupEventId, description, location,
                 startYear, startMonth, startDay, startHour, startMinute,
                 endYear, endMonth, endDay, endHour, endMinute);
     }
