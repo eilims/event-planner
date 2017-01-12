@@ -5,6 +5,7 @@
  */
 package com.eventplanner.service;
 
+import com.eventplanner.domain.Event;
 import com.eventplanner.domain.EventGroup;
 import com.eventplanner.repo.EventGroupRepository;
 import java.util.ArrayList;
@@ -33,6 +34,12 @@ public class EventGroupService {
         List<EventGroup> list = new ArrayList();
         groupRepo.findAll().forEach(list::add);
         return list;
+    }
+    
+    public void addEvent(Event event, Integer groupId){
+        EventGroup group = groupRepo.findOne(groupId);
+        group.getEventList().add(event);
+        groupRepo.save(group);
     }
 
 }
