@@ -8,6 +8,7 @@ package com.eventplanner.domain;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -26,13 +27,13 @@ public class EventGroup implements Serializable {
     @Column
     private String name;
 
-    @Column
+    @ElementCollection
     private List<Integer> memberList;
 
-    @Column
+    @ElementCollection
     private List<Integer> adminList;
 
-    @Column
+    @ElementCollection
     private List<Integer> eventList;
 
     public EventGroup(String name) {
