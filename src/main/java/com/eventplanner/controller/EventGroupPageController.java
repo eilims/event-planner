@@ -5,7 +5,6 @@
  */
 package com.eventplanner.controller;
 
-import com.eventplanner.domain.Event;
 import com.eventplanner.service.EventGroupService;
 import com.eventplanner.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 /**
@@ -36,13 +34,6 @@ public class EventGroupPageController {
     @PostMapping("createGroup")
     public String createGroup(String name){
         groupService.createGroup(name);
-        return "redirect:/groups.html";
-    }
-    
-    @PostMapping("addEvent/{groupId}")
-    public String addGroupEvent(@PathVariable Integer groupId, String name){
-        Event event = eventService.createEvent(name, groupId, "vlah", "blah", 0, 1, 1, 0, 0, 0, 1, 1, 0, 0);
-        groupService.addEvent(event, groupId);
         return "redirect:/groups.html";
     }
     

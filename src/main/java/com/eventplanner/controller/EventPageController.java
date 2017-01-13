@@ -6,7 +6,9 @@
 package com.eventplanner.controller;
 
 import com.eventplanner.service.EventService;
+import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,13 +32,11 @@ public class EventPageController {
         return "events";
     }
 
-    @PostMapping("createEvent") //For a post 
-    public String createEvent(String name, Integer eventGroupId, String description, String location,
-            int startYear, int startMonth, int startDay, int startHour, int startMinute,
-            int endYear, int endMonth, int endDay, int endHour, int endMinute) {
+    @PostMapping("createEvent/{eventGroupId}") //For a post 
+    public String createEvent(String name, @PathVariable Integer eventGroupId, String description, String location,
+            String startDate,String endDate) {
         eventService.createEvent(name, eventGroupId, description, location,
-                startYear, startMonth, startDay, startHour, startMinute,
-                endYear, endMonth, endDay, endHour, endMinute);
+                LocalDateTime.parse(startDate + ":00"), LocalDateTime.parse(endDate + ":00"));
         return "redirect:/events.html";
     }
 

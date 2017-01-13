@@ -7,6 +7,7 @@ package com.eventplanner.controller;
 
 import com.eventplanner.domain.Event;
 import com.eventplanner.service.EventService;
+import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,11 +28,9 @@ public class EventController {
     @PostMapping //For a post 
     @ResponseBody //Sending data back
     public Event createEvent(String name, Integer groupEventId, String description, String location,
-            int startYear, int startMonth, int startDay, int startHour, int startMinute,
-            int endYear, int endMonth, int endDay, int endHour, int endMinute) {
+            LocalDateTime startDate, LocalDateTime endDate) {
         return eventService.createEvent(name, groupEventId, description, location,
-                startYear, startMonth, startDay, startHour, startMinute,
-                endYear, endMonth, endDay, endHour, endMinute);
+                startDate, endDate);
     }
 
 }

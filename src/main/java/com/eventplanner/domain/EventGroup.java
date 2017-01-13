@@ -34,7 +34,7 @@ public class EventGroup implements Serializable {
     @ElementCollection
     private List<Integer> adminList;
 
-    @OneToMany
+    @OneToMany(mappedBy="eventGroup")
     private List<Event> eventList;
 
     public EventGroup(String name) {

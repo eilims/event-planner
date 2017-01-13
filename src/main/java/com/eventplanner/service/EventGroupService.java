@@ -29,17 +29,15 @@ public class EventGroupService {
             groupRepo.save(new EventGroup(name));
         }
     }
-    
-    public List getAllGroups(){
+
+    public List getAllGroups() {
         List<EventGroup> list = new ArrayList();
         groupRepo.findAll().forEach(list::add);
         return list;
     }
-    
-    public void addEvent(Event event, Integer groupId){
-        EventGroup group = groupRepo.findOne(groupId);
-        group.getEventList().add(event);
-        groupRepo.save(group);
+
+    public EventGroup findGroup(Integer id) {
+        return groupRepo.findOne(id);
     }
 
 }
