@@ -30,7 +30,19 @@
             textClick[int]=1;
         }
     }
+<<<<<<< OURS
+    function createPopup(){
+        var popup = open("", "Popup", "width=300,height=200");
+        var pBody = popup.document.body;
+        pBody.innerHTML= "<form name='event' action='createEvent' method='post' >";
+        pBody.innerHTML+= "Event Name:<input type='text' class='long' id='name' name='name' value='Enter Event Name' onClick='clearText('name', 0)' required/>";
+        pBody.innerHTML+= "Description: <textarea class='description' id='description' name='description' value='Enter Description'></textarea>";
+        pBody.innerHTML+= "<input type='submit' class='box' value='   Save   '/>";
+        //pBody.innerHTML= "</form>";
+    }
+=======
 
+>>>>>>> THEIRS
         </script>
     <br/>
     <br/>
