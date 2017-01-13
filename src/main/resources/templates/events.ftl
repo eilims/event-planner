@@ -1,6 +1,55 @@
 <!DOCTYPE html>
 <html>
     <head>
+    <style>
+        @font-face {
+            font-family: 'Moderne Sans'; /*a name to be used later*/
+            src: url('MODERNE SANS.ttf'); /*URL to font*/
+        }
+        header{
+                text-align: center;
+                color: #FFFFFF;
+                font-family: 'Moderne Sans';
+                font-size: 65px;
+        }
+        body{
+                background-color: #252525;
+                color: #3498db;
+                font-family: 'Moderne Sans';
+                font-size: 25px;
+        }
+        table{
+                margin: 0 auto; 
+        }
+        th{
+                text-align: center;
+        }
+        th, td{
+                padding: 10px;
+        }
+        .box{
+                background-color: #bdc3c7;
+                border-style: none;
+                height: 25px;
+                font-size: 20px;
+        }
+        .description{
+                background-color: #bdc3c7;
+                border-style: none;
+                font-size: 15px;
+                height: 200px;
+                width: 400px;
+        }
+        .long{
+                background-color: #bdc3c7;
+                border-style: none;
+                font-size: 20px;
+                height: 25px;
+                width: 400px;
+                overflow-x: scroll;
+        }
+
+    </style>
         <link rel="stylesheet" type="text/css" href="PageStyle.css">
     <header><b>Add An Event</b></header>
     <script type="text/javascript">
@@ -38,7 +87,7 @@
         pBody.innerHTML+= "Event Name:<input type='text' class='long' id='name' name='name' value='Enter Event Name' onClick='clearText('name', 0)' required/>";
         pBody.innerHTML+= "Description: <textarea class='description' id='description' name='description' value='Enter Description'></textarea>";
         pBody.innerHTML+= "<input type='submit' class='box' value='   Save   '/>";
-        //pBody.innerHTML= "</form>";
+        pBody.innerHTML+= "</form>";
     }
 =======
 
@@ -168,7 +217,7 @@
                 <th>Minute:</th> <td><input type="number" class="box" name="endMinute" min="0" max="59" required/></td>
                 </tr>
             <tr>
-                Group ID: <input type="number" name="eventGroupId" min="0"/>
+                <th>Group ID:</th> <td><input type="number" class="box" name="eventGroupId" min="0"/></td>
                 <td><input type="submit" class="box" value="   Save   "/></td>
                 </tr>
             </table>
