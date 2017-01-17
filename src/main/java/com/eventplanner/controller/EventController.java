@@ -19,18 +19,18 @@ import org.springframework.web.bind.annotation.RestController;
  * @author DanielB
  */
 @RestController
-@RequestMapping("event")
+@RequestMapping("createEvent")
 public class EventController {
 
     @Autowired
     private EventService eventService;
 
-    @PostMapping //For a post 
+    @PostMapping("createEvent")
     @ResponseBody //Sending data back
-    public Event createEvent(String name, Integer groupEventId, String description, String location,
+    public Event createEvent(String name, Integer eventGroupId, String description, String location,
             LocalDateTime startDate, LocalDateTime endDate) {
-        return eventService.createEvent(name, groupEventId, description, location,
-                startDate, endDate);
+        return eventService.createEvent(name, eventGroupId, description, location,
+                LocalDateTime.parse(startDate + ":00"), LocalDateTime.parse(endDate + ":00"));
     }
 
 }
