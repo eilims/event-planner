@@ -3,7 +3,7 @@
     <head>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script>
-            function sendNewEvent(groupId){
+            function sendNewEvent(groupId) {
                 var event = {
                     name: document.getElementById(groupId).rows.namedItem("nameRow").cells.namedItem("nameCell").children[0].value,
                     eventGroupId: groupId,
@@ -12,15 +12,30 @@
                     startDate: document.getElementById(groupId).rows.namedItem("strRow").cells.namedItem("strCell").children[0].value,
                     endDate: document.getElementById(groupId).rows.namedItem("endRow").cells.namedItem("endCell").children[0].value,
                 }
-                    if(event.name == "" || event.description == "" || event.location == "" || startDate == "" || endDate == ""){
-                        alert("Please fill out all fields");
-                        return;
-                    }
-                    $.ajax({
-                         url:"/createEvent",
-                         type: "post",
-                         data: event
-                    });
+                if (event.name == "" || event.description == "" || event.location == "" || startDate == "" || endDate == "") {
+                    alert("Please fill out all fields");
+                    return;
+                }
+                $.ajax({
+                    url: "/createEvent",
+                    type: "post",
+                    data: event
+                });
+                location.reload();
+            }
+            function deleteEvent(eventId){
+                var event = {
+                    eventId: eventId
+                }
+                $.ajax({
+                    url: "/deleteEvent",
+                    type: "post",
+                    data: event
+                });
+                location.reload();
+            }
+            function fuckYou(){
+                alert("Fuck You");
             }
         </script>
     </head>
@@ -57,9 +72,24 @@
                     </form>
                 <ol>
                     <#list group.getEventList() as event>
-                    <li>
-                        <b>Event Name: </b>${event.name?html}
-                    </li>
+                        <li>
+                            <b>Event: </b>${event.name?html}
+                            <b>Start Date: </b>${event.startDate.toLocalDate()} 
+                            <b>Start Time: </b>${event.startDate.toLocalTime()} 
+                            <b>End Date: </b>${event.endDate.toLocalDate()} 
+                            <b>End Time: </b>${event.endDate.toLocalTime()} 
+                            <b>Description: </b>${event.description?html}
+                                MemberId: <input type="number" name="memberId" min="0"/>
+                                <input type="button" value="Add" onClick="fuckYou()"/>
+                            <ol>
+                                <#list event.getAttendeeList() as members>
+                                    <li>
+                                        <b>Member: </b>${members}
+                                    </li>
+                                </#list>
+                            </ol>
+                                <input type="button" value="Delete" onClick="deleteEvent(${event.id})">
+                            </li>
                     </#list>
                 </ol>
             </li>
