@@ -6,7 +6,9 @@
 package com.eventplanner.service;
 
 import com.eventplanner.domain.Event;
+import com.eventplanner.repo.EventGroupRepository;
 import com.eventplanner.repo.EventRepository;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,14 +23,14 @@ public class EventService {
 
     @Autowired
     private EventRepository eventRepo;
+    @Autowired
+    private EventGroupRepository groupRepo;
 
     public Event createEvent(String name, Integer eventGroupId, String description, String location,
-            int startYear, int startMonth, int startDay, int startHour, int startMinute,
-            int endYear, int endMonth, int endDay, int endHour, int endMinute) {
+            LocalDateTime startDate, LocalDateTime endDate) {
         //Add duplicate name here
-        return eventRepo.save(new Event(name, eventGroupId, description, location,
-                startYear, startMonth, startDay, startHour, startMinute,
-                endYear, endMonth, endDay, endHour, endMinute));
+        return eventRepo.save(new Event(name, groupRepo.findOne(eventGroupId), description, location,
+                startDate, endDate));
     }
 
     public void deleteEvent(Integer eventId) {

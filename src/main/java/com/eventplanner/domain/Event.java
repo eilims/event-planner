@@ -13,6 +13,7 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -40,21 +41,20 @@ public class Event implements Serializable {
     @Column
     private LocalDateTime endDate;
 
-    @Column
-    private Integer eventGroupId;
+    @ManyToOne
+    private EventGroup eventGroup;
 
     @ElementCollection 
     private List<Integer> attendeeList;
 
-    public Event(String name, Integer eventGroupId, String description, String location,
-            int startYear, int startMonth, int startDay, int startHour, int startMinute,
-            int endYear, int endMonth, int endDay, int endHour, int endMinute) {
+    public Event(String name, EventGroup eventGroup, String description, String location,
+            LocalDateTime startDate, LocalDateTime endDate) {
         this.name = name;
-        this.startDate = LocalDateTime.of(startYear, startMonth, startDay, startHour, startMinute);
+        this.startDate = startDate;
         this.description = description;
         this.location = location;
-        this.endDate = LocalDateTime.of(endYear, endMonth, endDay, endHour, endMinute);
-        this.eventGroupId = eventGroupId;
+        this.endDate = endDate;
+        this.eventGroup = eventGroup;
     }
 
     protected Event() {
@@ -113,11 +113,11 @@ public class Event implements Serializable {
         this.attendeeList = attendeeList;
     }
 
-    public Integer getEventGroupId() {
-        return eventGroupId;
+    public EventGroup getEventGroup() {
+        return eventGroup;
     }
 
-    public void setEventGroupId(Integer eventGroupId) {
-        this.eventGroupId = eventGroupId;
+    public void setEventGroup(EventGroup eventGroup) {
+        this.eventGroup = eventGroup;
     }
 }
