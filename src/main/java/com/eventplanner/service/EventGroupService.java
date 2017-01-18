@@ -23,10 +23,17 @@ public class EventGroupService {
     @Autowired
     private EventGroupRepository groupRepo;
 
-    public void createGroup(String name) {
+    public EventGroup createGroup(String name) {
         //Ensures no duplicate named groups
         if (groupRepo.findByName(name) == null) {
-            groupRepo.save(new EventGroup(name));
+            return groupRepo.save(new EventGroup(name));
+        }
+        return null;
+    }
+    
+    public void deleteGroup(Integer eventGroupId){
+        if(groupRepo.exists(eventGroupId)){
+            groupRepo.delete(eventGroupId);
         }
     }
 
@@ -36,8 +43,12 @@ public class EventGroupService {
         return list;
     }
 
-    public EventGroup findGroup(Integer id) {
+    public EventGroup findGroupById(Integer id) {
         return groupRepo.findOne(id);
+    }
+    
+    public EventGroup findGroupByName(String name){
+        return groupRepo.findByName(name);
     }
 
 }

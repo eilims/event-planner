@@ -3,7 +3,30 @@
     <head>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script>
-            function sendNewEvent(groupId) {
+            function createGroup(){
+                var group = {
+                    name: document.getElementById("groupName").value
+                }
+                $.ajax({
+                    url: "/createGroup",
+                    type: "post",
+                    data: group,
+                    complete: completeCallBack
+                });
+            }
+                
+            function deleteGroup(groupId){
+                var group = {
+                    eventGroupId: groupId
+                }
+                $.ajax({
+                    url: "/deleteGroup",
+                    type: "post",
+                    data: group,
+                    complete: completeCallBack
+                });
+            }
+            function createEvent(groupId) {
                 var event = {
                     name: document.getElementById(groupId).rows.namedItem("nameRow").cells.namedItem("nameCell").children[0].value,
                     eventGroupId: groupId,
@@ -19,9 +42,9 @@
                 $.ajax({
                     url: "/createEvent",
                     type: "post",
-                    data: event
+                    data: event,
+                    complete: completeCallBack
                 });
-                location.reload();
             }
             function deleteEvent(eventId){
                 var event = {
@@ -30,8 +53,11 @@
                 $.ajax({
                     url: "/deleteEvent",
                     type: "post",
-                    data: event
+                    data: event,
+                    complete: completeCallBack
                 });
+            }
+            function completeCallBack(){
                 location.reload();
             }
             function fuckYou(){
@@ -40,18 +66,16 @@
         </script>
     </head>
     <body>
-        <form name="group" action="createGroup" method="post">
-            Group Name:<input type="text" name="name"/>
-            <input type="submit" value="Save"/>
-        </form>
+            Group Name:<input type="text" id="groupName"/>
+            <input type="button" value="Save" onClick="createGroup()"/>
         <ol>
             <#list model.groupList as group>
             <li>
                 <b>Group Name: </b>${group.name?html}
-                <form name="event" action="">
+                <input type="button" value="Delete Group" onClick="deleteGroup(${group.id})"/>
                     <table id="${group.id}">
                         <tr id="nameRow">
-                            <th>Event Name:</th> <td id="nameCell"><input type="text" class="long" id="name" required/><td>
+                            <th>Event Name:</th> <td id="nameCell"><input type="text" class="long" id="eventName" required/><td>
                         </tr>
                         <tr id="desRow">
                             <th>Description:</th> <td id="desCell"><textarea class="description" id="description" name="description" required></textarea>
@@ -60,16 +84,15 @@
                             <th>Location:</th> <td id="locCell"><input type="text" class="long" id="location" name="location" required></td>
                         </tr>
                         <tr id="strRow">
-                            <th>Start Time: </th><td id="strCell"><input type="datetime-local" id="startDate" name="startDate" required/></td>
+                            <th>Start Time: </th><td id="strCell"><input type="datetime-local" id="startDate" name="startDate" max="9999-12-31T00:00" required/></td>
                         </tr>
                         <tr id="endRow">
-                            <th>End Time:</th> <td id="endCell"><input type="datetime-local" id="endDate"name="endDate" required/></td>
+                            <th>End Time:</th> <td id="endCell"><input type="datetime-local" id="endDate"name="endDate" max="9999-12-31T00:00" required/></td>
                         </tr>
                         <tr id="button">
-                        <td><input type="button" value="Save" onClick="sendNewEvent(${group.id})"/></td>
+                        <td><input type="button" value="Save" onClick="createEvent(${group.id})"/></td>
                         </tr>
                         </table>
-                    </form>
                 <ol>
                     <#list group.getEventList() as event>
                         <li>
