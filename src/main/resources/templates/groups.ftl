@@ -26,7 +26,7 @@
                     complete: completeCallBack
                 });
             }
-            function createEvent(groupId) {
+            function createEvents(groupId) {
                 var event = {
                     name: document.getElementById(groupId).rows.namedItem("nameRow").cells.namedItem("nameCell").children[0].value,
                     eventGroupId: groupId,
@@ -90,7 +90,7 @@
                             <th>End Time:</th> <td id="endCell"><input type="datetime-local" id="endDate"name="endDate" max="9999-12-31T00:00" required/></td>
                         </tr>
                         <tr id="button">
-                        <td><input type="button" value="Save" onClick="createEvent(${group.id})"/></td>
+                        <td><input type="button" value="Save" onClick="createEvents(${group.id})"/></td>
                         </tr>
                         </table>
                 <ol>
