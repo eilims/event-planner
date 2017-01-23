@@ -21,16 +21,9 @@ public class LoginPageController {
         return "login";
     }
 
-    @GetMapping("/login?error")
-    public String showErrorPage(ModelMap model) {
-        model.addAttribute("error", true);
-        return "login";
-    }
-
-    @GetMapping("/login?logout")
-    public String showLogoutPage(ModelMap model) {
-        model.addAttribute("logout", true);
-        return "login";
+    @GetMapping("/register")
+    public String showRegisterPage(){
+        return "register";
     }
 
 }

@@ -13,5 +13,6 @@ import org.springframework.data.repository.CrudRepository;
  * @author DanielB
  */
 public interface EventMemberRepository extends CrudRepository<EventMember, Integer>{
+    EventMember findByUsername(String username);
     
 }

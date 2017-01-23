@@ -12,6 +12,7 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 /**
@@ -28,8 +29,8 @@ public class EventGroup implements Serializable {
     @Column
     private String name;
 
-    @ElementCollection
-    private List<Integer> memberList;
+    @ManyToMany
+    private List<EventMember> memberList;
 
     @ElementCollection
     private List<Integer> adminList;
@@ -58,11 +59,11 @@ public class EventGroup implements Serializable {
         this.name = name;
     }
 
-    public List<Integer> getMemberList() {
+    public List<EventMember> getMemberList() {
         return memberList;
     }
 
-    public void setMemberList(List<Integer> memberList) {
+    public void setMemberList(List<EventMember> memberList) {
         this.memberList = memberList;
     }
 

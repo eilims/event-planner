@@ -6,6 +6,7 @@
 package com.eventplanner.service;
 
 import com.eventplanner.domain.Event;
+import com.eventplanner.domain.EventMember;
 import com.eventplanner.repo.EventGroupRepository;
 import com.eventplanner.repo.EventRepository;
 import java.time.LocalDateTime;
@@ -67,10 +68,10 @@ public class EventService {
         return list;
     }
 
-    public void addMember(Integer eventId, Integer memberId) {
+    public void addMember(Integer eventId, EventMember member) {
         //Temporary test method
         Event event = eventRepo.findOne(eventId);
-        event.getAttendeeList().add(memberId);
+        event.getAttendeeList().add(member);
         eventRepo.save(event);
     }
 }

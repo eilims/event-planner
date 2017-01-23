@@ -8,6 +8,7 @@ package com.eventplanner.service;
 import com.eventplanner.domain.EventMember;
 import com.eventplanner.repo.EventMemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -18,8 +19,10 @@ import org.springframework.stereotype.Service;
 public class EventMemberService {
     @Autowired
     private EventMemberRepository memberRepo;
-    
-    public EventMember createMember(String username){
-        return memberRepo.save(new EventMember(username));
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    public EventMember createMember(String username, String password, String email) {
+        return memberRepo.save(new EventMember(username, passwordEncoder.encode(password), email));
     }
 }

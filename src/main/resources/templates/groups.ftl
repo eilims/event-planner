@@ -4,13 +4,17 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script>
             function createGroup(){
+                var csrf = {
+                    "${_csrf.headerName?js_string}" : "${_csrf.token?js_string}"
+                }
                 var group = {
-                    name: document.getElementById("groupName").value
+                    name: document.getElementById("groupName").value,
                 }
                 $.ajax({
                     url: "/createGroup",
                     type: "post",
                     data: group,
+                    header: csrf,
                     complete: completeCallBack
                 });
             }
@@ -66,6 +70,10 @@
         </script>
     </head>
     <body>
+            <form action="/logout" method="POST">
+                <input type="submit" value="Logout"/>
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>		
+            </form>  
             Group Name:<input type="text" id="groupName"/>
             <input type="button" value="Save" onClick="createGroup()"/>
         <ol>

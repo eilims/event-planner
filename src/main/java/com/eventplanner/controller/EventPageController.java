@@ -5,8 +5,8 @@
  */
 package com.eventplanner.controller;
 
+import com.eventplanner.domain.EventMember;
 import com.eventplanner.service.EventService;
-import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -47,8 +47,8 @@ public class EventPageController {
 //    }
 
     @PostMapping("addMember/{eventId}")
-    public String addMember(@PathVariable Integer eventId, Integer memberId) {
-        eventService.addMember(eventId, memberId);
+    public String addMember(@PathVariable Integer eventId, EventMember member) {
+        eventService.addMember(eventId, member);
         return "redirect:/events.html";
     }
 

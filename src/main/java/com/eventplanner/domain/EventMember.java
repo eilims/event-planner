@@ -10,6 +10,7 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import org.springframework.security.core.GrantedAuthority;
@@ -48,7 +49,7 @@ public class EventMember implements UserDetails {
     @Column
     private boolean credentialsNonExpired;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private Set<GrantedAuthority> authorities;
 
     public EventMember(String username, String password, String email) {

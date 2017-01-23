@@ -9,10 +9,10 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 /**
@@ -44,8 +44,8 @@ public class Event implements Serializable {
     @ManyToOne
     private EventGroup eventGroup;
 
-    @ElementCollection 
-    private List<Integer> attendeeList;
+    @ManyToMany
+    private List<EventMember> attendeeList;
 
     public Event(String name, EventGroup eventGroup, String description, String location,
             LocalDateTime startDate, LocalDateTime endDate) {
@@ -105,11 +105,11 @@ public class Event implements Serializable {
         this.endDate = LocalDateTime.of(year, month, day, hour, minute);
     }
 
-    public List<Integer> getAttendeeList() {
+    public List<EventMember> getAttendeeList() {
         return attendeeList;
     }
 
-    public void setAttendeeList(List<Integer> attendeeList) {
+    public void setAttendeeList(List<EventMember> attendeeList) {
         this.attendeeList = attendeeList;
     }
 
