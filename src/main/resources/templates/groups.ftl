@@ -14,12 +14,15 @@
                     url: "/createGroup",
                     type: "post",
                     data: group,
-                    header: csrf,
+                    headers: csrf,
                     complete: completeCallBack
                 });
             }
                 
             function deleteGroup(groupId){
+                var csrf = {
+                    "${_csrf.headerName?js_string}" : "${_csrf.token?js_string}"
+                }
                 var group = {
                     eventGroupId: groupId
                 }
@@ -27,10 +30,14 @@
                     url: "/deleteGroup",
                     type: "post",
                     data: group,
+                    headers: csrf,          
                     complete: completeCallBack
                 });
             }
             function createEvents(groupId) {
+                var csrf = {
+                    "${_csrf.headerName?js_string}" : "${_csrf.token?js_string}"
+                }
                 var event = {
                     name: document.getElementById(groupId).rows.namedItem("nameRow").cells.namedItem("nameCell").children[0].value,
                     eventGroupId: groupId,
@@ -47,10 +54,14 @@
                     url: "/createEvent",
                     type: "post",
                     data: event,
+                    headers: csrf,            
                     complete: completeCallBack
                 });
             }
             function deleteEvent(eventId){
+                var csrf = {
+                    "${_csrf.headerName?js_string}" : "${_csrf.token?js_string}"
+                }
                 var event = {
                     eventId: eventId
                 }
@@ -58,6 +69,7 @@
                     url: "/deleteEvent",
                     type: "post",
                     data: event,
+                    headers: csrf,            
                     complete: completeCallBack
                 });
             }
