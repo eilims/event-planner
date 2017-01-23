@@ -29,20 +29,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private EventMemberDetailsService memberService;
 
     @Override
-    public void configure(WebSecurity web) throws Exception {
-        web
-                .ignoring()
-                .antMatchers("/createMember")
-                .and()
-                .ignoring()
-                .antMatchers("/register.html");
-    }
-
-    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .anyRequest().authenticated()
+                .antMatchers("/register.html", "/createMember")
+                .permitAll()
+                .anyRequest()
+                .authenticated()
                 .and()
                 .exceptionHandling()
                 .accessDeniedPage("/login?error")

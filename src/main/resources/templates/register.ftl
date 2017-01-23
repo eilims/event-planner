@@ -4,6 +4,9 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script>
             function sendNewMember(){
+                var csrf = {
+                    "${_csrf.headerName?js_string}" : "${_csrf.token?js_string}"
+                }
                 var eventMember = {
                     username: document.getElementById("username").value,
                     password: document.getElementById("password").value,
@@ -13,6 +16,7 @@
                     url: "/createMember",
                     type: "post",
                     data: eventMember,
+                    headers: csrf,
                     complete: completeCallBack
                 });
             }
