@@ -58,7 +58,7 @@ public class EventService {
     
     public List findGroupEvents(Integer groupId, List<Integer> eventList){
         List<Event> list = new ArrayList();
-        eventList.forEach(item -> list.add(eventRepo.findByIdAndEventGroupId(item,groupId)));
+        eventList.forEach(item -> list.add(eventRepo.findByIdAndEventGroup(item,groupRepo.findOne(groupId))));
         return list;
     }
 

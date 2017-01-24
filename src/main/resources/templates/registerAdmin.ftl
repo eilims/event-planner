@@ -10,7 +10,8 @@
                 var eventMember = {
                     username: document.getElementById("username").value,
                     password: document.getElementById("password").value,
-                    email: document.getElementById("email").value
+                    email: document.getElementById("email").value,
+                    role: "ADMIN"    
                 }
                 $.ajax({
                     url: "/createMember",
@@ -27,12 +28,9 @@
         </script>
     </head>
     <body>
-        <form>
             Username: <input name="username" id="username" type="text" required/>
             Password: <input name="password" id="password" type="password" required/>
             Email: <input name="email" id="email" type="text" required/>
             <input type="button" value="Submit" onClick="sendNewMember()"/>
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        </form>
     </body>
 </html>

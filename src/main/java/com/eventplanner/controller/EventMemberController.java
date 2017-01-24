@@ -24,8 +24,8 @@ public class EventMemberController {
 
     @PostMapping("/createMember")
     @ResponseBody
-    public EventMember createMember(String username, String password, String email) {
-        return memberService.createMember(username, password, email);
+    public EventMember createMember(String username, String password, String email ,String role) {
+        return memberService.createMember(username, password, email, role);
     }
 
 }

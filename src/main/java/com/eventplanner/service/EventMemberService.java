@@ -22,7 +22,7 @@ public class EventMemberService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public EventMember createMember(String username, String password, String email) {
-        return memberRepo.save(new EventMember(username, passwordEncoder.encode(password), email));
+    public EventMember createMember(String username, String password, String email, String role) {
+        return memberRepo.save(new EventMember(username, passwordEncoder.encode(password), email, role));
     }
 }

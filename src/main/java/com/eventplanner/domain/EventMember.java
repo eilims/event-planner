@@ -52,7 +52,7 @@ public class EventMember implements UserDetails {
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<GrantedAuthority> authorities;
 
-    public EventMember(String username, String password, String email) {
+    public EventMember(String username, String password, String email, String role) {
         this.username = username;
         this.password = password;
         this.email = email;
@@ -61,7 +61,7 @@ public class EventMember implements UserDetails {
         this.accountNonLocked = true;
         this.credentialsNonExpired = true;
         this.authorities  = new HashSet();
-        authorities.add(new SimpleGrantedAuthority("USER"));
+        authorities.add(new SimpleGrantedAuthority(role));
     }
 
     protected EventMember() {
