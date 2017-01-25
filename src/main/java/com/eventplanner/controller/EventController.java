@@ -6,11 +6,14 @@
 package com.eventplanner.controller;
 
 import com.eventplanner.domain.Event;
+import com.eventplanner.service.EventMemberService;
 import com.eventplanner.service.EventService;
 import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,12 +23,14 @@ import org.springframework.web.bind.annotation.RestController;
  * @author DanielB
  */
 @RestController
+@RequestMapping("/admin/event")
 public class EventController {
 
     @Autowired
     private EventService eventService;
 
-    @PostMapping("createEvent")
+
+    @PostMapping("/createEvent")
     @ResponseBody //Sending data back
     public Event createEvent(String name, Integer eventGroupId, String description, String location,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime startDate,
@@ -34,9 +39,19 @@ public class EventController {
                 LocalDateTime.parse(startDate + ":00"), LocalDateTime.parse(endDate + ":00"));
     }
 
-    @PostMapping("deleteEvent")
+    @PostMapping("/deleteEvent")
     public Event deleteEvent(Integer eventId) {
         eventService.deleteEvent(eventId);
         return null;
+    }
+    
+    @PostMapping("/addMember")
+    public Event addMember(Integer eventId, String username){
+        return eventService.addMember(eventId, username);
+    }
+    
+    @PostMapping("/removeMember")
+    public Event removeMember(Integer eventId, String username){
+        return eventService.removeMember(eventId, username);
     }
 }
