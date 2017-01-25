@@ -25,12 +25,14 @@ public class EventService {
     @Autowired
     private EventRepository eventRepo;
     @Autowired
-    private EventGroupRepository groupRepo;
+    private EventGroupService groupService;
+    @Autowired
+    private EventMemberService memberService; 
 
     public Event createEvent(String name, Integer eventGroupId, String description, String location,
             LocalDateTime startDate, LocalDateTime endDate) {
         //Add duplicate name here
-        return eventRepo.save(new Event(name, groupRepo.findOne(eventGroupId), description, location,
+        return eventRepo.save(new Event(name, groupService.findGroupById(eventGroupId), description, location,
                 startDate, endDate));
     }
 
@@ -58,7 +60,7 @@ public class EventService {
     
     public List findGroupEvents(Integer groupId, List<Integer> eventList){
         List<Event> list = new ArrayList();
-        eventList.forEach(item -> list.add(eventRepo.findByIdAndEventGroup(item,groupRepo.findOne(groupId))));
+        eventList.forEach(item -> list.add(eventRepo.findByIdAndEventGroup(item,groupService.findGroupById(groupId))));
         return list;
     }
 
@@ -68,10 +70,15 @@ public class EventService {
         return list;
     }
 
-    public void addMember(Integer eventId, EventMember member) {
-        //Temporary test method
+    public Event addMember(Integer eventId, String username) {
         Event event = eventRepo.findOne(eventId);
-        event.getAttendeeList().add(member);
-        eventRepo.save(event);
+        event.getAttendeeList().add(memberService.findMemberByName(username));
+        return eventRepo.save(event);
+    }
+    
+    public Event removeMember(Integer eventId, String username){
+        Event event = eventRepo.findOne(eventId);
+        event.getAttendeeList().remove(memberService.findMemberByName(username));
+        return eventRepo.save(event);
     }
 }
