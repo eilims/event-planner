@@ -19,10 +19,10 @@
                 <tr><td><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></td></tr>
             </table>
         </form>
-        <form action="http://localhost:8080/registerUser.html" method="get">
+        <form action="http://localhost:8080/register/user.html" method="get">
             <input id="register" type="submit" value="Register New User"/>
         </form>
-        <form action="http://localhost:8080/registerAdmin.html" method="get">
+        <form action="http://localhost:8080/register/admin.html" method="get">
             <input id="register" type="submit" value="Register New Admin"/>
         </form>
     </body>

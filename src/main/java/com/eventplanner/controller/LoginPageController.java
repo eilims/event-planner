@@ -21,14 +21,14 @@ public class LoginPageController {
         return "login";
     }
 
-    @GetMapping("/registerUser")
+    @GetMapping("/register/user")
     public String showUserRegisterPage(){
-        return "registerUser";
+        return "user";
     }
     
-    @GetMapping("/registerAdmin")
+    @GetMapping("/register/admin")
     public String showAdminRegisterPage(){
-        return "registerAdmin";
+        return "admin";
     }
 
 }

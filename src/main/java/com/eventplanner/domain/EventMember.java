@@ -6,6 +6,7 @@
 package com.eventplanner.domain;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -13,6 +14,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -51,6 +53,9 @@ public class EventMember implements UserDetails {
 
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<GrantedAuthority> authorities;
+    
+    @ManyToMany (mappedBy = "memberList")
+    private List<Event> eventList;
 
     public EventMember(String username, String password, String email, String role) {
         this.username = username;
@@ -141,6 +146,14 @@ public class EventMember implements UserDetails {
 
     public Integer getId() {
         return id;
+    }
+
+    public List<Event> getEventList() {
+        return eventList;
+    }
+
+    public void setEventList(List<Event> eventList) {
+        this.eventList = eventList;
     }
 
 }

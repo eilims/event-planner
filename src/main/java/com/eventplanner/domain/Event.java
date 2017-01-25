@@ -44,8 +44,8 @@ public class Event implements Serializable {
     @ManyToOne
     private EventGroup eventGroup;
 
-    @ManyToMany
-    private List<EventMember> attendeeList;
+    @ManyToMany 
+    private List<EventMember> memberList;
 
     public Event(String name, EventGroup eventGroup, String description, String location,
             LocalDateTime startDate, LocalDateTime endDate) {
@@ -106,11 +106,11 @@ public class Event implements Serializable {
     }
 
     public List<EventMember> getAttendeeList() {
-        return attendeeList;
+        return memberList;
     }
 
     public void setAttendeeList(List<EventMember> attendeeList) {
-        this.attendeeList = attendeeList;
+        this.memberList = attendeeList;
     }
 
     public EventGroup getEventGroup() {
