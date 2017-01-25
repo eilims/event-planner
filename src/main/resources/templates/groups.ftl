@@ -11,7 +11,7 @@
                     name: document.getElementById("groupName").value,
                 }
                 $.ajax({
-                    url: "/createGroup",
+                    url: "/admin/group/createGroup",
                     type: "post",
                     data: group,
                     headers: csrf,
@@ -27,7 +27,7 @@
                     eventGroupId: groupId
                 }
                 $.ajax({
-                    url: "/deleteGroup",
+                    url: "/admin/group/deleteGroup",
                     type: "post",
                     data: group,
                     headers: csrf,          
@@ -51,7 +51,7 @@
                     return;
                 }
                 $.ajax({
-                    url: "/createEvent",
+                    url: "/admin/event/createEvent",
                     type: "post",
                     data: event,
                     headers: csrf,            
@@ -66,10 +66,42 @@
                     eventId: eventId
                 }
                 $.ajax({
-                    url: "/deleteEvent",
+                    url: "/admin/event/deleteEvent",
                     type: "post",
                     data: event,
                     headers: csrf,            
+                    complete: completeCallBack
+                });
+            }
+            function addMember(eventId){
+                var csrf = {
+                    "${_csrf.headerName?js_string}" : "${_csrf.token?js_string}"
+                }
+                var data = {
+                    eventId: eventId,
+                    username: document.getElementById(eventId).rows.namedItem("usernameRow").cells.namedItem("usernameCell").children[0].value
+                }
+                $.ajax({
+                    url: "/admin/event/addMember",
+                    type: "post",
+                    data: data,
+                    headers: csrf,
+                    complete: completeCallBack
+                });
+            }
+            function removeMember(eventId, username){
+                var csrf = {
+                    "${_csrf.headerName?js_string}" : "${_csrf.token?js_string}"
+                }
+                var data = {
+                    eventId: eventId,
+                    username: username
+                }
+                $.ajax({
+                    url: "/admin/event/removeMember",
+                    type: "post",
+                    data: data,
+                    headers: csrf,
                     complete: completeCallBack
                 });
             }
@@ -116,23 +148,29 @@
                 <ol>
                     <#list group.getEventList() as event>
                         <li>
-                            <b>Event: </b>${event.name?html}
-                            <b>Start Date: </b>${event.startDate.toLocalDate()} 
-                            <b>Start Time: </b>${event.startDate.toLocalTime()} 
-                            <b>End Date: </b>${event.endDate.toLocalDate()} 
-                            <b>End Time: </b>${event.endDate.toLocalTime()} 
-                            <b>Description: </b>${event.description?html}
-                                MemberId: <input type="number" name="memberId" min="0"/>
-                                <input type="button" value="Add" onClick="fuckYou()"/>
+                            <table id="${event.id}"
+                            <tr><th><b>Event: </b></th><td>${event.name?html}</td></tr>
+                            <tr><th><b>Start Date: </b></th><td>${event.startDate.toLocalDate()} </td></tr>
+                            <tr><th><b>Start Time: </b></th><td>${event.startDate.toLocalTime()} </td></tr>
+                            <tr><th><b>End Date: </b></th><td>${event.endDate.toLocalDate()} </td></tr>
+                            <tr><th><b>End Time: </b></th><td>${event.endDate.toLocalTime()} </td></tr>
+                            <tr><th><b>Description: </b></th><td>${event.description?html}</td></tr>
+                            <tr><th><b>Location: </b></th><td>${event.location?html}</td></tr>
+                            </br>
+                            <tr id="usernameRow"><th><b>Member Username: </b></th><td id="usernameCell"><input type="text" id="memberUsername" name="memberUsername"/></td>
+                            <td><input type="button" value="Add Member" onClick="addMember(${event.id})"/></td> </tr>
+                            <tr><td><input type="button" value="Delete Event" onClick="deleteEvent(${event.id})"></td></tr>
                             <ol>
-                                <#list event.getAttendeeList() as members>
+                                <#list event.getAttendeeList() as member>
                                     <li>
-                                        <b>Member: </b>${members}
+                                        <tr id="member.username"><th><b>Member: </b></th><td>${member.username}</td>
+                                        <td><input type="button" value="Remove Member" onClick="removeMember(${event.id},'${member.username}')"/></td></tr>
                                     </li>
                                 </#list>
                             </ol>
-                                <input type="button" value="Delete" onClick="deleteEvent(${event.id})">
+                                
                             </li>
+                            </table>
                     </#list>
                 </ol>
             </li>
