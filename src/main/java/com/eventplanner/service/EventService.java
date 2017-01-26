@@ -6,8 +6,6 @@
 package com.eventplanner.service;
 
 import com.eventplanner.domain.Event;
-import com.eventplanner.domain.EventMember;
-import com.eventplanner.repo.EventGroupRepository;
 import com.eventplanner.repo.EventRepository;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -72,13 +70,13 @@ public class EventService {
 
     public Event addMember(Integer eventId, String username) {
         Event event = eventRepo.findOne(eventId);
-        event.getAttendeeList().add(memberService.findMemberByName(username));
+        event.getMemberList().add(memberService.findByUsername(username));
         return eventRepo.save(event);
     }
     
     public Event removeMember(Integer eventId, String username){
         Event event = eventRepo.findOne(eventId);
-        event.getAttendeeList().remove(memberService.findMemberByName(username));
+        event.getMemberList().remove(memberService.findByUsername(username));
         return eventRepo.save(event);
     }
 }

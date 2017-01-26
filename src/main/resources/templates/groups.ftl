@@ -34,17 +34,17 @@
                     complete: completeCallBack
                 });
             }
-            function createEvents(groupId) {
+            function createEvents(groupName, groupId) {
                 var csrf = {
                     "${_csrf.headerName?js_string}" : "${_csrf.token?js_string}"
                 }
                 var event = {
-                    name: document.getElementById(groupId).rows.namedItem("nameRow").cells.namedItem("nameCell").children[0].value,
+                    name: document.getElementById(groupName).rows.namedItem("nameRow").cells.namedItem("nameCell").children[0].value,
                     eventGroupId: groupId,
-                    description: document.getElementById(groupId).rows.namedItem("desRow").cells.namedItem("desCell").children[0].value,
-                    location: document.getElementById(groupId).rows.namedItem("locRow").cells.namedItem("locCell").children[0].value,
-                    startDate: document.getElementById(groupId).rows.namedItem("strRow").cells.namedItem("strCell").children[0].value,
-                    endDate: document.getElementById(groupId).rows.namedItem("endRow").cells.namedItem("endCell").children[0].value,
+                    description: document.getElementById(groupName).rows.namedItem("desRow").cells.namedItem("desCell").children[0].value,
+                    location: document.getElementById(groupName).rows.namedItem("locRow").cells.namedItem("locCell").children[0].value,
+                    startDate: document.getElementById(groupName).rows.namedItem("strRow").cells.namedItem("strCell").children[0].value,
+                    endDate: document.getElementById(groupName).rows.namedItem("endRow").cells.namedItem("endCell").children[0].value,
                 }
                 if (event.name == "" || event.description == "" || event.location == "" || startDate == "" || endDate == "") {
                     alert("Please fill out all fields");
@@ -104,12 +104,41 @@
                     headers: csrf,
                     complete: completeCallBack
                 });
+            }    
+            function addGroupMember(groupName, groupId, username){
+                var csrf = {
+                    "${_csrf.headerName?js_string}" : "${_csrf.token?js_string}"
+                }
+                var data = {
+                    groupId: groupId,
+                    username: document.getElementById(groupName).rows.namedItem("usernameRow").cells.namedItem("usernameCell").children[0].value
+                }
+                $.ajax({
+                    url: "/admin/group/addMember",
+                    type: "post",
+                    data: data,
+                    headers: csrf,
+                    complete: completeCallBack
+                });
             }
+            function removeGroupMember(groupId, username){
+                var csrf = {
+                    "${_csrf.headerName?js_string}" : "${_csrf.token?js_string}"
+                }
+                var data = {
+                    groupId: groupId,
+                    username: username
+                }
+                $.ajax({
+                    url: "/admin/group/removeMember",
+                    type: "post",
+                    data: data,
+                    headers: csrf,
+                    complete: completeCallBack
+                });
+            }  
             function completeCallBack(){
                 location.reload();
-            }
-            function fuckYou(){
-                alert("Fuck You");
             }
         </script>
     </head>
@@ -125,7 +154,11 @@
             <li>
                 <b>Group Name: </b>${group.name?html}
                 <input type="button" value="Delete Group" onClick="deleteGroup(${group.id})"/>
-                    <table id="${group.id}">
+                    <table id="${group.name}">
+                        <tr id="usernameRow">
+                            <th><b>Member Username: </b></th><td id="usernameCell"><input type="text" id="memberUsername" name="memberUsername"/></td>
+                        <td><input type="button" value="Add Member" onClick="addGroupMember('${group.name}', ${group.id})"/></td>
+                        </tr>
                         <tr id="nameRow">
                             <th>Event Name:</th> <td id="nameCell"><input type="text" class="long" id="eventName" required/><td>
                         </tr>
@@ -142,13 +175,21 @@
                             <th>End Time:</th> <td id="endCell"><input type="datetime-local" id="endDate"name="endDate" max="9999-12-31T00:00" required/></td>
                         </tr>
                         <tr id="button">
-                        <td><input type="button" value="Save" onClick="createEvents(${group.id})"/></td>
+                        <td><input type="button" value="Save" onClick="createEvents(${group.name}, ${group.id})"/></td>
                         </tr>
                         </table>
+                            <ol>
+                                <#list group.getMemberList() as member>
+                                    <li>
+                                        <tr id="member.username"><th><b>Member: </b></th><td>${member.username}</td>
+                                        <td><input type="button" value="Remove Member" onClick="removeGroupMember(${group.id},'${member.username}')"/></td></tr>
+                                    </li>
+                                </#list>
+                            </ol>
                 <ol>
                     <#list group.getEventList() as event>
                         <li>
-                            <table id="${event.id}"
+                            <table id="${event.id}">
                             <tr><th><b>Event: </b></th><td>${event.name?html}</td></tr>
                             <tr><th><b>Start Date: </b></th><td>${event.startDate.toLocalDate()} </td></tr>
                             <tr><th><b>Start Time: </b></th><td>${event.startDate.toLocalTime()} </td></tr>
@@ -159,18 +200,18 @@
                             </br>
                             <tr id="usernameRow"><th><b>Member Username: </b></th><td id="usernameCell"><input type="text" id="memberUsername" name="memberUsername"/></td>
                             <td><input type="button" value="Add Member" onClick="addMember(${event.id})"/></td> </tr>
-                            <tr><td><input type="button" value="Delete Event" onClick="deleteEvent(${event.id})"></td></tr>
                             <ol>
-                                <#list event.getAttendeeList() as member>
+                                <#list event.getMemberList() as member>
                                     <li>
                                         <tr id="member.username"><th><b>Member: </b></th><td>${member.username}</td>
                                         <td><input type="button" value="Remove Member" onClick="removeMember(${event.id},'${member.username}')"/></td></tr>
                                     </li>
                                 </#list>
                             </ol>
-                                
-                            </li>
-                            </table>
+                            <tr><td><input type="button" value="Delete Event" onClick="deleteEvent(${event.id})"></td></tr>
+                            </table>    
+                        </li>
+                            
                     </#list>
                 </ol>
             </li>

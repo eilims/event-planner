@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/admin/group")
 public class EventGroupController {
+
     @Autowired
     private EventGroupService groupService;
 
@@ -28,24 +29,35 @@ public class EventGroupController {
     public EventGroup createGroup(String name) {
         return groupService.createGroup(name);
     }
-    
+
     @PostMapping("/deleteGroup")
     @ResponseBody
-    public EventGroup deleteGroup(Integer eventGroupId){
+    public EventGroup deleteGroup(Integer eventGroupId) {
         groupService.deleteGroup(eventGroupId);
         return null;
     }
-    
+
     @PostMapping("/updateGroup")
     @ResponseBody
-    public EventGroup updateGroup(Integer eventGroupId, String name){
+    public EventGroup updateGroup(Integer eventGroupId, String name) {
         return null;
     }
-    
+
     @PostMapping("/findGroup")
     @ResponseBody
-    public EventGroup findGroup(String name){
+    public EventGroup findGroup(String name) {
         return groupService.findGroupByName(name);
     }
 
+    @PostMapping("/addMember")
+    @ResponseBody
+    public EventGroup addMember(Integer groupId, String username) {
+        return groupService.addMember(groupId, username);
+    }
+
+    @PostMapping("/removeMember")
+    @ResponseBody
+    public EventGroup removeMember(Integer groupId, String username) {
+        return groupService.removeMember(groupId, username);
+    }
 }

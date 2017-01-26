@@ -26,7 +26,7 @@ public class EventMemberService {
         return memberRepo.save(new EventMember(username, passwordEncoder.encode(password), email, role));
     }
     
-    public EventMember findMemberByName(String name){
+    public EventMember findByUsername(String name){
         return memberRepo.findByUsername(name);
     }
 }

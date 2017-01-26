@@ -105,11 +105,11 @@ public class Event implements Serializable {
         this.endDate = LocalDateTime.of(year, month, day, hour, minute);
     }
 
-    public List<EventMember> getAttendeeList() {
+    public List<EventMember> getMemberList() {
         return memberList;
     }
 
-    public void setAttendeeList(List<EventMember> attendeeList) {
+    public void setMemberList(List<EventMember> attendeeList) {
         this.memberList = attendeeList;
     }
 

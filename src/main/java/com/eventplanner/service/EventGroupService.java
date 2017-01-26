@@ -8,6 +8,7 @@ package com.eventplanner.service;
 import com.eventplanner.domain.Event;
 import com.eventplanner.domain.EventGroup;
 import com.eventplanner.repo.EventGroupRepository;
+import com.eventplanner.repo.EventMemberRepository;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ public class EventGroupService {
 
     @Autowired
     private EventGroupRepository groupRepo;
+    @Autowired
+    private EventMemberService memberService;
 
     public EventGroup createGroup(String name) {
         //Ensures no duplicate named groups
@@ -49,6 +52,20 @@ public class EventGroupService {
     
     public EventGroup findGroupByName(String name){
         return groupRepo.findByName(name);
+    }
+    
+    public EventGroup addMember(Integer groupId, String name){
+        EventGroup group = groupRepo.findOne(groupId);
+        group.getMemberList().add(memberService.findByUsername(name));
+        groupRepo.save(group);
+        return group;
+    }
+    
+    public EventGroup removeMember(Integer groupId, String name){
+        EventGroup group = groupRepo.findOne(groupId);
+        group.getMemberList().remove(memberService.findByUsername(name));
+        groupRepo.save(group);
+        return group;
     }
 
 }
