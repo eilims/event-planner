@@ -7,6 +7,7 @@ package com.eventplanner.domain;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -55,6 +56,8 @@ public class Event implements Serializable {
         this.location = location;
         this.endDate = endDate;
         this.eventGroup = eventGroup;
+        this.memberList = new ArrayList();
+        eventGroup.getMemberList().forEach(this.memberList::add);
     }
 
     protected Event() {

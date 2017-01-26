@@ -27,10 +27,10 @@ public class EventService {
     @Autowired
     private EventMemberService memberService; 
 
-    public Event createEvent(String name, Integer eventGroupId, String description, String location,
+    public Event createEvent(String name, Integer groupId, String description, String location,
             LocalDateTime startDate, LocalDateTime endDate) {
         //Add duplicate name here
-        return eventRepo.save(new Event(name, groupService.findGroupById(eventGroupId), description, location,
+        return eventRepo.save(new Event(name, groupService.findGroupById(groupId), description, location,
                 startDate, endDate));
     }
 

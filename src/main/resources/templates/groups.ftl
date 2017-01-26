@@ -40,7 +40,7 @@
                 }
                 var event = {
                     name: document.getElementById(groupName).rows.namedItem("nameRow").cells.namedItem("nameCell").children[0].value,
-                    eventGroupId: groupId,
+                    groupId: groupId,
                     description: document.getElementById(groupName).rows.namedItem("desRow").cells.namedItem("desCell").children[0].value,
                     location: document.getElementById(groupName).rows.namedItem("locRow").cells.namedItem("locCell").children[0].value,
                     startDate: document.getElementById(groupName).rows.namedItem("strRow").cells.namedItem("strCell").children[0].value,
@@ -175,14 +175,14 @@
                             <th>End Time:</th> <td id="endCell"><input type="datetime-local" id="endDate"name="endDate" max="9999-12-31T00:00" required/></td>
                         </tr>
                         <tr id="button">
-                        <td><input type="button" value="Save" onClick="createEvents(${group.name}, ${group.id})"/></td>
+                        <td><input type="button" value="Save" onClick="createEvents('${group.name}', ${group.id})"/></td>
                         </tr>
                         </table>
                             <ol>
                                 <#list group.getMemberList() as member>
                                     <li>
                                         <tr id="member.username"><th><b>Member: </b></th><td>${member.username}</td>
-                                        <td><input type="button" value="Remove Member" onClick="removeGroupMember(${group.id},'${member.username}')"/></td></tr>
+                                        <td><input type="button" value="Remove Member" onClick="removeGroupMember('${group.id}','${member.username}')"/></td></tr>
                                     </li>
                                 </#list>
                             </ol>
@@ -210,8 +210,7 @@
                             </ol>
                             <tr><td><input type="button" value="Delete Event" onClick="deleteEvent(${event.id})"></td></tr>
                             </table>    
-                        </li>
-                            
+                        </li>       
                     </#list>
                 </ol>
             </li>

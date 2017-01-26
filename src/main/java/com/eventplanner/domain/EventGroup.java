@@ -6,6 +6,7 @@
 package com.eventplanner.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -41,6 +42,9 @@ public class EventGroup implements Serializable {
     public EventGroup(String name) {
         //TODO add initial admin upon instantiation
         this.name = name;
+        this.memberList = new ArrayList();
+        this.adminList = new ArrayList();
+        this.eventList = new ArrayList();
     }
     
     protected EventGroup(){

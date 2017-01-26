@@ -32,10 +32,10 @@ public class EventController {
 
     @PostMapping("/createEvent")
     @ResponseBody //Sending data back
-    public Event createEvent(String name, Integer eventGroupId, String description, String location,
+    public Event createEvent(String name, Integer groupId, String description, String location,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime startDate,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime endDate) {
-        return eventService.createEvent(name, eventGroupId, description, location,
+        return eventService.createEvent(name, groupId, description, location,
                 LocalDateTime.parse(startDate + ":00"), LocalDateTime.parse(endDate + ":00"));
     }
 
