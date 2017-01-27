@@ -7,7 +7,10 @@ package com.eventplanner.service;
 
 import com.eventplanner.domain.EventMember;
 import com.eventplanner.repo.EventMemberRepository;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -28,5 +31,17 @@ public class EventMemberService {
     
     public EventMember findByUsername(String name){
         return memberRepo.findByUsername(name);
+    }
+    
+        public List<EventMember> getAllMembers() {
+        List<EventMember> memList = new ArrayList();
+        memberRepo.findAll().forEach(item -> {
+            if(!item.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN")))
+            {
+                memList.add(item);
+            }
+        });
+        
+        return memList;
     }
 }
