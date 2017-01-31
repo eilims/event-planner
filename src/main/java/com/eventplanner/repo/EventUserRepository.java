@@ -12,7 +12,7 @@ import org.springframework.data.repository.CrudRepository;
  *
  * @author DanielB
  */
-public interface EventMemberRepository extends CrudRepository<EventUser, Integer>{
+public interface EventUserRepository extends CrudRepository<EventUser, Integer>{
     EventUser findByUsername(String username);
     
 }

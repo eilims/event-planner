@@ -6,7 +6,7 @@
 package com.eventplanner.controller;
 
 import com.eventplanner.service.EventGroupService;
-import com.eventplanner.service.EventMemberService;
+import com.eventplanner.service.EventUserService;
 import com.eventplanner.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,7 +28,7 @@ public class EventGroupPageController {
     @Autowired
     private EventService eventService;
     @Autowired
-    private EventMemberService memService;
+    private EventUserService memService;
 
     @GetMapping("/groups.html")
     public String showPage(@ModelAttribute("model") ModelMap model) {

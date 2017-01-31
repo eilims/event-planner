@@ -14,7 +14,7 @@
                     role: "USER"    
                 }
                 $.ajax({
-                    url: "/createMember",
+                    url: "/user/createMember",
                     type: "post",
                     data: eventMember,
                     headers: csrf,

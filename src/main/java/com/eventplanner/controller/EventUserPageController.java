@@ -7,24 +7,22 @@ package com.eventplanner.controller;
 
 import com.eventplanner.domain.EventUser;
 import com.eventplanner.service.EventGroupService;
-import com.eventplanner.service.EventMemberService;
+import com.eventplanner.service.EventUserService;
 import java.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  *
  * @author DanielB
  */
 @Controller
-@RequestMapping("/user")
-public class EventMemberPageController {
+public class EventUserPageController {
     @Autowired
-    private EventMemberService memberService;
+    private EventUserService memberService;
     @Autowired
     private EventGroupService groupService;
     

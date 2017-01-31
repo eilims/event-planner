@@ -25,7 +25,7 @@ public class EventService {
     @Autowired
     private EventGroupService groupService;
     @Autowired
-    private EventMemberService memberService; 
+    private EventUserService memberService; 
 
     public Event createEvent(String name, Integer groupId, String description, String location,
             LocalDateTime startDate, LocalDateTime endDate) {

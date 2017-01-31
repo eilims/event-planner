@@ -22,7 +22,7 @@ public class EventGroupService {
     @Autowired
     private EventGroupRepository groupRepo;
     @Autowired
-    private EventMemberService memberService;
+    private EventUserService memberService;
 
     public EventGroup createGroup(String name) {
         //Ensures no duplicate named groups

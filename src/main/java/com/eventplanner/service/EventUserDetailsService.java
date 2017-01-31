@@ -6,22 +6,22 @@
 package com.eventplanner.service;
 
 import com.eventplanner.domain.EventUser;
-import com.eventplanner.repo.EventMemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import com.eventplanner.repo.EventUserRepository;
 
 /**
  *
  * @author DanielB
  */
 @Service
-public class EventMemberDetailsService implements UserDetailsService {
+public class EventUserDetailsService implements UserDetailsService {
     @Autowired
-    private EventMemberRepository memberRepo;
+    private EventUserRepository memberRepo;
 
     @Override
     public UserDetails loadUserByUsername(String string) throws UsernameNotFoundException {

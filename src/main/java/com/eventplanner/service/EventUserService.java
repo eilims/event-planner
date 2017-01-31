@@ -6,22 +6,22 @@
 package com.eventplanner.service;
 
 import com.eventplanner.domain.EventUser;
-import com.eventplanner.repo.EventMemberRepository;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import com.eventplanner.repo.EventUserRepository;
 
 /**
  *
  * @author DanielB
  */
 @Service
-public class EventMemberService {
+public class EventUserService {
     @Autowired
-    private EventMemberRepository memberRepo;
+    private EventUserRepository memberRepo;
     @Autowired
     private PasswordEncoder passwordEncoder;
 

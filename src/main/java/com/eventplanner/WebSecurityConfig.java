@@ -5,7 +5,7 @@
  */
 package com.eventplanner;
 
-import com.eventplanner.service.EventMemberDetailsService;
+import com.eventplanner.service.EventUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,16 +25,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private EventMemberDetailsService memberService;
+    private EventUserDetailsService memberService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/register/**", "/createMember")
+                .antMatchers("/register/**", "/user/createMember")
                 .permitAll()
                 .antMatchers("/admin/**")
                 .hasAuthority("ADMIN")
+                .antMatchers("/user/**")
+                .hasAuthority("USER")
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -44,6 +46,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/login")
                 .permitAll()
+                .defaultSuccessUrl("/home")
                 .and()
                 .logout()
                 .permitAll();
