@@ -29,24 +29,22 @@
             <input type="submit" value="Logout"/>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>		
         </form>  
-        Welcome ${model.user}!
+        Welcome ${model.username}!
         <#list model.groupList as group>
             <table id="${group.groupName}">
                 <ol>
                     <tr> <th>Group Name:</th><td>${group.groupName}</td></tr>
                     <tr><th>Members:</th></tr>
                     <#list group.getGroupMemberList() as member>
-                        <li>
+                        
                             <tr id="member.username"><th></th><td>${member.username}</td></tr>
-                        </li>
+                        
                     </#list>
                 </ol>
             </table>
                 <ol>
                     <#list group.getGroupEventList() as event>
-                        <#if !event.eventMemberList>
-                        <li>
-                            
+                        <#if event.eventMemberList?seq_contains(model.user)>
                             <table id="${event.eventId}">
                             <tr><th><b>Event: </b></th><td>${event.eventName?html}</td></tr>
                             <tr><th><b>Start Date: </b></th><td>${event.startDate.toLocalDate()} </td></tr>
@@ -55,18 +53,15 @@
                             <tr><th><b>End Time: </b></th><td>${event.endDate.toLocalTime()} </td></tr>
                             <tr><th><b>Description: </b></th><td>${event.description?html}</td></tr>
                             <tr><th><b>Location: </b></th><td>${event.location?html}</td></tr>
-                            <tr><td><input type="button" value="I can't go" onClick="removeMember(${event.eventId},'${model.username}')"/></td></tr>
                             </br>
                             <ol>
                                 <tr><th>Attendees:</th></tr>
                                 <#list event.getEventMemberList() as member>
-                                    <li>
                                         <tr id="${member.username}"><th></th><td>${member.username}</td></tr>
-                                    </li>
                                 </#list>
                             </ol>
+                            <tr><td><input type="button" value="I can't go" onClick="removeMember(${event.eventId},'${model.username}')"/></td></tr>
                             </table>
-                        </li>
                         </#if>
                     </#list>
                 </ol>

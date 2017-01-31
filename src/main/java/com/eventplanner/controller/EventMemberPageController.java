@@ -33,8 +33,8 @@ public class EventMemberPageController {
         String username = principal.getName();
         EventUser member = memberService.findByUsername(username);
         model.addAttribute("groupList", member.getUserGroupList());
-        model.addAttribute("username", username);
-        model.addAttribute("userId", member.getId());
+        model.addAttribute("username", member.getUsername());
+        model.addAttribute("user", member);
         return "userPage";
     }
     
