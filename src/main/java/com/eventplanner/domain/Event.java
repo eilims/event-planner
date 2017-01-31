@@ -5,14 +5,16 @@
  */
 package com.eventplanner.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 /**
@@ -42,10 +44,12 @@ public class Event implements Serializable {
     private LocalDateTime endDate;
 
     @ManyToOne
+    @JsonBackReference
     private EventGroup eventGroup;
 
-    @ElementCollection 
-    private List<Integer> attendeeList;
+    @ManyToMany 
+    @JsonBackReference
+    private List<EventUser> eventMemberList;
 
     public Event(String name, EventGroup eventGroup, String description, String location,
             LocalDateTime startDate, LocalDateTime endDate) {
@@ -55,21 +59,23 @@ public class Event implements Serializable {
         this.location = location;
         this.endDate = endDate;
         this.eventGroup = eventGroup;
+        this.eventMemberList = new ArrayList();
+        eventGroup.getGroupMemberList().forEach(this.eventMemberList::add);
     }
 
     protected Event() {
 
     }
 
-    public Integer getId() {
+    public Integer getEventId() {
         return id;
     }
 
-    public String getName() {
+    public String getEventName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setEventName(String name) {
         this.name = name;
     }
 
@@ -105,14 +111,14 @@ public class Event implements Serializable {
         this.endDate = LocalDateTime.of(year, month, day, hour, minute);
     }
 
-    public List<Integer> getAttendeeList() {
-        return attendeeList;
+    public List<EventUser> getEventMemberList() {
+        return eventMemberList;
     }
 
-    public void setAttendeeList(List<Integer> attendeeList) {
-        this.attendeeList = attendeeList;
+    public void setEventMemberList(List<EventUser> attendeeList) {
+        this.eventMemberList = attendeeList;
     }
-
+    
     public EventGroup getEventGroup() {
         return eventGroup;
     }

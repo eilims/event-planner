@@ -6,7 +6,6 @@
 package com.eventplanner.service;
 
 import com.eventplanner.domain.Event;
-import com.eventplanner.repo.EventGroupRepository;
 import com.eventplanner.repo.EventRepository;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -24,12 +23,14 @@ public class EventService {
     @Autowired
     private EventRepository eventRepo;
     @Autowired
-    private EventGroupRepository groupRepo;
+    private EventGroupService groupService;
+    @Autowired
+    private EventMemberService memberService; 
 
-    public Event createEvent(String name, Integer eventGroupId, String description, String location,
+    public Event createEvent(String name, Integer groupId, String description, String location,
             LocalDateTime startDate, LocalDateTime endDate) {
         //Add duplicate name here
-        return eventRepo.save(new Event(name, groupRepo.findOne(eventGroupId), description, location,
+        return eventRepo.save(new Event(name, groupService.findGroupById(groupId), description, location,
                 startDate, endDate));
     }
 
@@ -41,7 +42,7 @@ public class EventService {
             int startYear, int startMonth, int startDay, int startHour, int startMinute,
             int endYear, int endMonth, int endDay, int endHour, int endMinute) {
         Event event = eventRepo.findOne(eventId);
-        event.setName(name);
+        event.setEventName(name);
         event.setDescription(description);
         event.setLocation(location);
         event.setStartDate(startYear, startMonth, startDay, startHour, startMinute);
@@ -57,7 +58,7 @@ public class EventService {
     
     public List findGroupEvents(Integer groupId, List<Integer> eventList){
         List<Event> list = new ArrayList();
-        eventList.forEach(item -> list.add(eventRepo.findByIdAndEventGroupId(item,groupId)));
+        eventList.forEach(item -> list.add(eventRepo.findByIdAndEventGroup(item,groupService.findGroupById(groupId))));
         return list;
     }
 
@@ -67,10 +68,15 @@ public class EventService {
         return list;
     }
 
-    public void addMember(Integer eventId, Integer memberId) {
-        //Temporary test method
+    public Event addMember(Integer eventId, String username) {
         Event event = eventRepo.findOne(eventId);
-        event.getAttendeeList().add(memberId);
-        eventRepo.save(event);
+        event.getEventMemberList().add(memberService.findByUsername(username));
+        return eventRepo.save(event);
+    }
+    
+    public Event removeMember(Integer eventId, String username){
+        Event event = eventRepo.findOne(eventId);
+        event.getEventMemberList().remove(memberService.findByUsername(username));
+        return eventRepo.save(event);
     }
 }

@@ -5,13 +5,14 @@
  */
 package com.eventplanner.repo;
 
-import com.eventplanner.domain.EventMember;
+import com.eventplanner.domain.EventUser;
 import org.springframework.data.repository.CrudRepository;
 
 /**
  *
  * @author DanielB
  */
-public interface EventMemberRepository extends CrudRepository<EventMember, Integer>{
+public interface EventMemberRepository extends CrudRepository<EventUser, Integer>{
+    EventUser findByUsername(String username);
     
 }

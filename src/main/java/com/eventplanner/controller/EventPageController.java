@@ -6,7 +6,6 @@
 package com.eventplanner.controller;
 
 import com.eventplanner.service.EventService;
-import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -29,27 +28,6 @@ public class EventPageController {
     public String showPage(@ModelAttribute("model") ModelMap model) {
         model.addAttribute("eventList", eventService.getAllEvents());
         return "events";
-    }
-
-//    @PostMapping("createEvent") //For a post 
-//    public String createEvent(String name, Integer eventGroupId, String description, String location,
-//            String startDate,String endDate) {
-//        eventService.createEvent(name, eventGroupId, description, location,
-//                LocalDateTime.parse(startDate + ":00"), LocalDateTime.parse(endDate + ":00"));
-//        return "redirect:/events.html";
-//    }
-    
-
-//    @PostMapping("deleteEvent/{eventId}")
-//    public String deleteEvent(@PathVariable Integer eventId) {
-//        eventService.deleteEvent(eventId);
-//        return "redirect:/events.html";
-//    }
-
-    @PostMapping("addMember/{eventId}")
-    public String addMember(@PathVariable Integer eventId, Integer memberId) {
-        eventService.addMember(eventId, memberId);
-        return "redirect:/events.html";
     }
 
     @PostMapping("updateEvent/{eventId}")

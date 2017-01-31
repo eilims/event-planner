@@ -5,13 +5,17 @@
  */
 package com.eventplanner.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 /**
@@ -28,57 +32,62 @@ public class EventGroup implements Serializable {
     @Column
     private String name;
 
-    @ElementCollection
-    private List<Integer> memberList;
+    @ManyToMany
+    @JsonBackReference
+    private List<EventUser> groupMemberList;
 
     @ElementCollection
     private List<Integer> adminList;
 
     @OneToMany(mappedBy="eventGroup")
+    @JsonManagedReference
     private List<Event> eventList;
 
     public EventGroup(String name) {
         //TODO add initial admin upon instantiation
         this.name = name;
+        this.groupMemberList = new ArrayList();
+        this.adminList = new ArrayList();
+        this.eventList = new ArrayList();
     }
     
     protected EventGroup(){
         
     }
 
-    public Integer getId() {
+    public Integer getGroupId() {
         return id;
     }
 
-    public String getName() {
+    public String getGroupName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setGroupName(String name) {
         this.name = name;
     }
 
-    public List<Integer> getMemberList() {
-        return memberList;
+    public List<EventUser> getGroupMemberList() {
+        return groupMemberList;
     }
 
-    public void setMemberList(List<Integer> memberList) {
-        this.memberList = memberList;
+    public void setGroupMemberList(List<EventUser> groupMemberList) {
+        this.groupMemberList = groupMemberList;
     }
 
-    public List<Integer> getAdminList() {
+    public List<Integer> getGroupAdminList() {
         return adminList;
     }
 
-    public void setAdminList(List<Integer> adminList) {
+    public void setGroupAdminList(List<Integer> adminList) {
         this.adminList = adminList;
     }
 
-    public List<Event> getEventList() {
+    public List<Event> getGroupEventList() {
         return eventList;
     }
 
-    public void setEventList(List<Event> eventList) {
+    public void setGroupEventList(List<Event> eventList) {
         this.eventList = eventList;
     }
 
