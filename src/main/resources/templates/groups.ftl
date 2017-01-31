@@ -152,12 +152,12 @@
         <ol>
             <#list model.groupList as group>
             <li>
-                <b>Group Name: </b>${group.name?html}
-                <input type="button" value="Delete Group" onClick="deleteGroup(${group.id})"/>
-                    <table id="${group.name}">
+                <b>Group Name: </b>${group.groupName?html}
+                <input type="button" value="Delete Group" onClick="deleteGroup(${group.groupId})"/>
+                    <table id="${group.groupName}">
                         <tr id="usernameRow">
                             <th><b>Member Username: </b></th><td id="usernameCell"><input type="text" id="memberUsername" name="memberUsername"/></td>
-                        <td><input type="button" value="Add Member" onClick="addGroupMember('${group.name}', ${group.id})"/></td>
+                        <td><input type="button" value="Add Member" onClick="addGroupMember('${group.groupName}', ${group.groupId})"/></td>
                         </tr>
                         <tr id="nameRow">
                             <th>Event Name:</th> <td id="nameCell"><input type="text" class="long" id="eventName" required/><td>
@@ -175,22 +175,22 @@
                             <th>End Time:</th> <td id="endCell"><input type="datetime-local" id="endDate"name="endDate" max="9999-12-31T00:00" required/></td>
                         </tr>
                         <tr id="button">
-                        <td><input type="button" value="Save" onClick="createEvents('${group.name}', ${group.id})"/></td>
+                        <td><input type="button" value="Save" onClick="createEvents('${group.groupName}', ${group.groupId})"/></td>
                         </tr>
                         </table>
                             <ol>
-                                <#list group.getMemberList() as member>
+                                <#list group.getGroupMemberList() as member>
                                     <li>
                                         <tr id="member.username"><th><b>Member: </b></th><td>${member.username}</td>
-                                        <td><input type="button" value="Remove Member" onClick="removeGroupMember('${group.id}','${member.username}')"/></td></tr>
+                                        <td><input type="button" value="Remove Member" onClick="removeGroupMember('${group.groupId}','${member.username}')"/></td></tr>
                                     </li>
                                 </#list>
                             </ol>
                 <ol>
-                    <#list group.getEventList() as event>
+                    <#list group.getGroupEventList() as event>
                         <li>
-                            <table id="${event.id}">
-                            <tr><th><b>Event: </b></th><td>${event.name?html}</td></tr>
+                            <table id="${event.eventId}">
+                            <tr><th><b>Event: </b></th><td>${event.eventName?html}</td></tr>
                             <tr><th><b>Start Date: </b></th><td>${event.startDate.toLocalDate()} </td></tr>
                             <tr><th><b>Start Time: </b></th><td>${event.startDate.toLocalTime()} </td></tr>
                             <tr><th><b>End Date: </b></th><td>${event.endDate.toLocalDate()} </td></tr>
@@ -199,16 +199,16 @@
                             <tr><th><b>Location: </b></th><td>${event.location?html}</td></tr>
                             </br>
                             <tr id="usernameRow"><th><b>Member Username: </b></th><td id="usernameCell"><input type="text" id="memberUsername" name="memberUsername"/></td>
-                            <td><input type="button" value="Add Member" onClick="addMember(${event.id})"/></td> </tr>
+                            <td><input type="button" value="Add Member" onClick="addMember(${event.eventId})"/></td> </tr>
                             <ol>
-                                <#list event.getMemberList() as member>
+                                <#list event.getEventMemberList() as member>
                                     <li>
                                         <tr id="member.username"><th><b>Member: </b></th><td>${member.username}</td>
-                                        <td><input type="button" value="Remove Member" onClick="removeMember(${event.id},'${member.username}')"/></td></tr>
+                                        <td><input type="button" value="Remove Member" onClick="removeMember(${event.eventId},'${member.username}')"/></td></tr>
                                     </li>
                                 </#list>
                             </ol>
-                            <tr><td><input type="button" value="Delete Event" onClick="deleteEvent(${event.id})"></td></tr>
+                            <tr><td><input type="button" value="Delete Event" onClick="deleteEvent(${event.eventId})"></td></tr>
                             </table>    
                         </li>       
                     </#list>

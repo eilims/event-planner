@@ -5,7 +5,7 @@
  */
 package com.eventplanner.service;
 
-import com.eventplanner.domain.EventMember;
+import com.eventplanner.domain.EventUser;
 import com.eventplanner.repo.EventMemberRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,16 +25,16 @@ public class EventMemberService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public EventMember createMember(String username, String password, String email, String role) {
-        return memberRepo.save(new EventMember(username, passwordEncoder.encode(password), email, role));
+    public EventUser createMember(String username, String password, String email, String role) {
+        return memberRepo.save(new EventUser(username, passwordEncoder.encode(password), email, role));
     }
     
-    public EventMember findByUsername(String name){
+    public EventUser findByUsername(String name){
         return memberRepo.findByUsername(name);
     }
     
-        public List<EventMember> getAllMembers() {
-        List<EventMember> memList = new ArrayList();
+        public List<EventUser> getAllMembers() {
+        List<EventUser> memList = new ArrayList();
         memberRepo.findAll().forEach(item -> {
             if(!item.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN")))
             {

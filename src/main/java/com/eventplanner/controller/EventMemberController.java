@@ -5,7 +5,7 @@
  */
 package com.eventplanner.controller;
 
-import com.eventplanner.domain.EventMember;
+import com.eventplanner.domain.EventUser;
 import com.eventplanner.service.EventMemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,7 +24,7 @@ public class EventMemberController {
 
     @PostMapping("/createMember")
     @ResponseBody
-    public EventMember createMember(String username, String password, String email ,String role) {
+    public EventUser createMember(String username, String password, String email ,String role) {
         return memberService.createMember(username, password, email, role);
     }
 

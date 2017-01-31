@@ -5,6 +5,7 @@
  */
 package com.eventplanner.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -43,10 +44,12 @@ public class Event implements Serializable {
     private LocalDateTime endDate;
 
     @ManyToOne
+    @JsonBackReference
     private EventGroup eventGroup;
 
     @ManyToMany 
-    private List<EventMember> memberList;
+    @JsonBackReference
+    private List<EventUser> eventMemberList;
 
     public Event(String name, EventGroup eventGroup, String description, String location,
             LocalDateTime startDate, LocalDateTime endDate) {
@@ -56,23 +59,23 @@ public class Event implements Serializable {
         this.location = location;
         this.endDate = endDate;
         this.eventGroup = eventGroup;
-        this.memberList = new ArrayList();
-        eventGroup.getMemberList().forEach(this.memberList::add);
+        this.eventMemberList = new ArrayList();
+        eventGroup.getGroupMemberList().forEach(this.eventMemberList::add);
     }
 
     protected Event() {
 
     }
 
-    public Integer getId() {
+    public Integer getEventId() {
         return id;
     }
 
-    public String getName() {
+    public String getEventName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setEventName(String name) {
         this.name = name;
     }
 
@@ -108,14 +111,14 @@ public class Event implements Serializable {
         this.endDate = LocalDateTime.of(year, month, day, hour, minute);
     }
 
-    public List<EventMember> getMemberList() {
-        return memberList;
+    public List<EventUser> getEventMemberList() {
+        return eventMemberList;
     }
 
-    public void setMemberList(List<EventMember> attendeeList) {
-        this.memberList = attendeeList;
+    public void setEventMemberList(List<EventUser> attendeeList) {
+        this.eventMemberList = attendeeList;
     }
-
+    
     public EventGroup getEventGroup() {
         return eventGroup;
     }

@@ -5,7 +5,7 @@
  */
 package com.eventplanner.service;
 
-import com.eventplanner.domain.EventMember;
+import com.eventplanner.domain.EventUser;
 import com.eventplanner.repo.EventMemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -31,7 +31,7 @@ public class EventMemberDetailsService implements UserDetailsService {
         throw new UsernameNotFoundException("User not found");
     }
 
-    public User buildUser(EventMember member) {
+    public User buildUser(EventUser member) {
         return new User(member.getUsername(),
                 member.getPassword(),
                 true, true, true, true,

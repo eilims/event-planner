@@ -5,6 +5,7 @@
  */
 package com.eventplanner.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -24,7 +25,7 @@ import org.springframework.security.core.userdetails.UserDetails;
  * @author DanielB
  */
 @Entity
-public class EventMember implements UserDetails {
+public class EventUser implements UserDetails {
 
     @Id
     @GeneratedValue
@@ -54,10 +55,15 @@ public class EventMember implements UserDetails {
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<GrantedAuthority> authorities;
     
-    @ManyToMany (mappedBy = "memberList")
-    private List<Event> eventList;
+    @ManyToMany (mappedBy = "eventMemberList")
+    @JsonManagedReference
+    private List<Event> userEventList;
+    
+    @ManyToMany (mappedBy = "groupMemberList")
+    @JsonManagedReference
+    private List<EventGroup> userGroupList;
 
-    public EventMember(String username, String password, String email, String role) {
+    public EventUser(String username, String password, String email, String role) {
         this.username = username;
         this.password = password;
         this.email = email;
@@ -69,7 +75,7 @@ public class EventMember implements UserDetails {
         authorities.add(new SimpleGrantedAuthority(role));
     }
 
-    protected EventMember() {
+    protected EventUser() {
 
     }
 
@@ -148,12 +154,20 @@ public class EventMember implements UserDetails {
         return id;
     }
 
-    public List<Event> getEventList() {
-        return eventList;
+    public List<Event> getUserEventList() {
+        return userEventList;
     }
 
-    public void setEventList(List<Event> eventList) {
-        this.eventList = eventList;
+    public void setUserEventList(List<Event> eventList) {
+        this.userEventList = eventList;
+    }
+
+    public List<EventGroup> getUserGroupList() {
+        return userGroupList;
+    }
+
+    public void setUserGroupList(List<EventGroup> groupList) {
+        this.userGroupList = groupList;
     }
 
 }

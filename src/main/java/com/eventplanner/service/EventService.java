@@ -42,7 +42,7 @@ public class EventService {
             int startYear, int startMonth, int startDay, int startHour, int startMinute,
             int endYear, int endMonth, int endDay, int endHour, int endMinute) {
         Event event = eventRepo.findOne(eventId);
-        event.setName(name);
+        event.setEventName(name);
         event.setDescription(description);
         event.setLocation(location);
         event.setStartDate(startYear, startMonth, startDay, startHour, startMinute);
@@ -70,13 +70,13 @@ public class EventService {
 
     public Event addMember(Integer eventId, String username) {
         Event event = eventRepo.findOne(eventId);
-        event.getMemberList().add(memberService.findByUsername(username));
+        event.getEventMemberList().add(memberService.findByUsername(username));
         return eventRepo.save(event);
     }
     
     public Event removeMember(Integer eventId, String username){
         Event event = eventRepo.findOne(eventId);
-        event.getMemberList().remove(memberService.findByUsername(username));
+        event.getEventMemberList().remove(memberService.findByUsername(username));
         return eventRepo.save(event);
     }
 }
