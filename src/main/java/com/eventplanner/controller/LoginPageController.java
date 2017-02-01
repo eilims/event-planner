@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
  */
 @Controller
 public class LoginPageController {
-    
+
     @Autowired
     private EventUserService userService;
 
@@ -30,19 +30,19 @@ public class LoginPageController {
     }
 
     @GetMapping("/register/user")
-    public String showUserRegisterPage(){
+    public String showUserRegisterPage() {
         return "user";
     }
-    
+
     @GetMapping("/register/admin")
-    public String showAdminRegisterPage(){
+    public String showAdminRegisterPage() {
         return "admin";
     }
-    
+
     @GetMapping("/home")
-    public String showHomePage(@ModelAttribute("model") ModelMap model, Principal principal){
+    public String showHomePage(@ModelAttribute("model") ModelMap model, Principal principal) {
         String username = principal.getName();
-        if(userService.findByUsername(username).getAuthorities().contains(new SimpleGrantedAuthority("USER"))){
+        if (userService.findByUsername(username).getAuthorities().contains(new SimpleGrantedAuthority("USER"))) {
             model.addAttribute("auth", "USER");
         } else {
             model.addAttribute("auth", "ADMIN");

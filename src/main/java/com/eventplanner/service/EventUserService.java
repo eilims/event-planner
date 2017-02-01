@@ -20,28 +20,47 @@ import com.eventplanner.repo.EventUserRepository;
  */
 @Service
 public class EventUserService {
+
     @Autowired
-    private EventUserRepository memberRepo;
+    private EventUserRepository userRepo;
+    /*
+    PasswordEncoder encypts password using BCrypt more can be found in UserDetailsService
+    */
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    /*
+    Ensured no duplicate named users
+    add error send back
+    */
     public EventUser createMember(String username, String password, String email, String role) {
-        return memberRepo.save(new EventUser(username, passwordEncoder.encode(password), email, role));
+        if (userRepo.findByUsername(username) == null) {
+            return userRepo.save(new EventUser(username, passwordEncoder.encode(password), email, role));
+        }
+        return null;
     }
     
-    public EventUser findByUsername(String name){
-        return memberRepo.findByUsername(name);
+    public void deleteMember(Integer userId){
+        if(userRepo.exists(userId)){
+            userRepo.delete(userId);
+        }
     }
-    
-        public List<EventUser> getAllMembers() {
+
+    public EventUser findByUsername(String name) {
+        return userRepo.findByUsername(name);
+    }
+
+    /*
+    Used for search page
+    To be heavily modified (add group filtering
+    */
+    public List<EventUser> getAllMembers() {
         List<EventUser> memList = new ArrayList();
-        memberRepo.findAll().forEach(item -> {
-            if(!item.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN")))
-            {
+        userRepo.findAll().forEach(item -> {
+            if (!item.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN"))) {
                 memList.add(item);
             }
         });
-        
         return memList;
     }
 }

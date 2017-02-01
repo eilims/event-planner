@@ -26,7 +26,10 @@ import org.springframework.security.core.userdetails.UserDetails;
  */
 @Entity
 public class EventUser implements UserDetails {
-
+    /*
+    Implements UserDetails to ensure proper interface and later conversion
+    to spring security and Spring security User
+    */
     @Id
     @GeneratedValue
     private Integer id;
@@ -39,7 +42,11 @@ public class EventUser implements UserDetails {
 
     @Column
     private String email;
-
+    
+    /*
+    Note enabled, account**, and credentials**, and not currently 
+    used in this build. Perhaps later when expansions and transactions are made.
+    */
     @Column
     private boolean enabled;
 
@@ -54,12 +61,16 @@ public class EventUser implements UserDetails {
 
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<GrantedAuthority> authorities;
-    
-    @ManyToMany (mappedBy = "eventMemberList")
+
+    /*
+    Users hold the majority of the references, as they can exists without
+    groups or events, so the managed references are held here
+    */
+    @ManyToMany(mappedBy = "eventMemberList")
     @JsonManagedReference
     private List<Event> userEventList;
-    
-    @ManyToMany (mappedBy = "groupMemberList")
+
+    @ManyToMany(mappedBy = "groupMemberList")
     @JsonManagedReference
     private List<EventGroup> userGroupList;
 
@@ -71,7 +82,7 @@ public class EventUser implements UserDetails {
         this.accountNonExpired = true;
         this.accountNonLocked = true;
         this.credentialsNonExpired = true;
-        this.authorities  = new HashSet();
+        this.authorities = new HashSet();
         authorities.add(new SimpleGrantedAuthority(role));
     }
 

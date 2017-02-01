@@ -11,7 +11,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -31,15 +30,25 @@ public class EventGroup implements Serializable {
 
     @Column
     private String name;
-
+    
+    /*
+    Refer to Events for ManyToMany and JsonBackReference
+    
+    */
     @ManyToMany
     @JsonBackReference
     private List<EventUser> groupMemberList;
 
-    @ElementCollection
-    private List<Integer> adminList;
-
-    @OneToMany(mappedBy="eventGroup")
+    @ManyToMany
+    @JsonBackReference
+    private List<EventUser> adminList;
+    
+    /*
+    Group has many incoming events, but events belong to one group => OneToMany
+    Mapping is here as the container or parent should hold the mapping.
+    JsonManagedReference held here due to mapping
+    */
+    @OneToMany(mappedBy = "eventGroup")
     @JsonManagedReference
     private List<Event> eventList;
 
@@ -50,9 +59,9 @@ public class EventGroup implements Serializable {
         this.adminList = new ArrayList();
         this.eventList = new ArrayList();
     }
-    
-    protected EventGroup(){
-        
+
+    protected EventGroup() {
+
     }
 
     public Integer getGroupId() {
@@ -75,11 +84,11 @@ public class EventGroup implements Serializable {
         this.groupMemberList = groupMemberList;
     }
 
-    public List<Integer> getGroupAdminList() {
+    public List<EventUser> getGroupAdminList() {
         return adminList;
     }
 
-    public void setGroupAdminList(List<Integer> adminList) {
+    public void setGroupAdminList(List<EventUser> adminList) {
         this.adminList = adminList;
     }
 

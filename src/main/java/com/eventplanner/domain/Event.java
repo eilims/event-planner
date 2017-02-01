@@ -31,8 +31,17 @@ public class Event implements Serializable {
     @Column
     private String name;
 
+    /*
+    LocalDateTime is an object which contains a time and date, not the generic
+    java datetime.
+    Saves a lot of effort when coding. Superior to Java's DateTime
+    Can be passed to freemarker easily, and contains methods to split date and time
+    */
     @Column
     private LocalDateTime startDate;
+
+    @Column
+    private LocalDateTime endDate;
 
     @Column
     private String description;
@@ -40,14 +49,24 @@ public class Event implements Serializable {
     @Column
     private String location;
 
-    @Column
-    private LocalDateTime endDate;
-
+    /*
+    Many events go to one group. Events can belong to one group. ManyToOne :)
+    
+    JsonBackReference is given to the object that does not have the mapping
+    (called the back reference). The opposite of this is the JsonManagedReference
+    These annotiations are added are to prevent a recursive access to one another 
+    when saving. I.E. stackoverflow error.
+    */
     @ManyToOne
     @JsonBackReference
     private EventGroup eventGroup;
 
-    @ManyToMany 
+    /*
+    Users can be in many events and many events to different users => 
+    ManyToMany
+    Note the back reference and lack of mapping
+    */
+    @ManyToMany
     @JsonBackReference
     private List<EventUser> eventMemberList;
 
@@ -118,7 +137,7 @@ public class Event implements Serializable {
     public void setEventMemberList(List<EventUser> attendeeList) {
         this.eventMemberList = attendeeList;
     }
-    
+
     public EventGroup getEventGroup() {
         return eventGroup;
     }

@@ -23,45 +23,62 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
+    
     @Autowired
-    private EventUserDetailsService memberService;
-
+    private EventUserDetailsService userDetailService;
+    
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        /*
+        This sections specifies access to different pages and authorities
+        required. Inaddition to login page redirects and logout.
+        Commented out code will later authorize HTTPS at a later date 
+        Current Date: 31 January 2017
+        */
         http
                 .authorizeRequests()
-                .antMatchers("/register/**", "/user/createMember")
-                .permitAll()
-                .antMatchers("/admin/**")
-                .hasAuthority("ADMIN")
-                .antMatchers("/user/**")
-                .hasAuthority("USER")
-                .anyRequest()
-                .authenticated()
-                .and()
-                .exceptionHandling()
-                .accessDeniedPage("/login?error")
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .permitAll()
-                .defaultSuccessUrl("/home")
-                .and()
-                .logout()
-                .permitAll();
+                    .antMatchers("/register/**", "/user/createMember")
+                    .permitAll()
+                    .antMatchers("/admin/**")
+                    .hasAuthority("ADMIN")
+                    .antMatchers("/user/**")
+                    .hasAuthority("USER")
+                    .antMatchers("/developer/**")
+                    .hasAuthority("DEVELOPER")
+                    .anyRequest()
+                    .authenticated()
+                    .and()
+                    .exceptionHandling()
+                    .accessDeniedPage("/login?error")
+                    .and()
+                    .formLogin()
+                    .loginPage("/login")
+                    .permitAll()
+                    .defaultSuccessUrl("/home", true)
+                    .and()
+                    .logout()
+                    .permitAll();
+//                    .and()
+//                .requiresChannel()
+//                    .anyRequest()
+//                    .requiresSecure();
     }
-
+    
+    /*
+    configureGlobal sets up spring security, while passwordEncoder gives us a
+    softcoded encoder method. note the function call to passwordEncoder function
+    in configureGlobal method
+    */
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
-                .userDetailsService(memberService).passwordEncoder(passwordEncoder());
+                .userDetailsService(userDetailService).passwordEncoder(passwordEncoder());
     }
-
+    
     @Bean
     public PasswordEncoder passwordEncoder() {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         return encoder;
     }
-
+    
 }

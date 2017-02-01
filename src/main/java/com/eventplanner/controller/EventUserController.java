@@ -21,20 +21,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/user")
 public class EventUserController {
+
     @Autowired
     private EventService eventService;
     @Autowired
-    private EventUserService memberService;
+    private EventUserService userService;
 
     @PostMapping("/createMember")
     @ResponseBody
-    public EventUser createMember(String username, String password, String email ,String role) {
-        return memberService.createMember(username, password, email, role);
+    public EventUser createMember(String username, String password, String email, String role) {
+        return userService.createMember(username, password, email, role);
     }
-    
+
     @PostMapping("/removeMember")
     @ResponseBody
-    public EventUser removeMember(Integer eventId, String username){
+    public EventUser removeMember(Integer eventId, String username) {
         eventService.removeMember(eventId, username);
         return null;
     }

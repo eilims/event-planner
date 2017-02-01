@@ -28,7 +28,7 @@ public class EventGroupPageController {
     @Autowired
     private EventService eventService;
     @Autowired
-    private EventUserService memService;
+    private EventUserService userService;
 
     @GetMapping("/groups.html")
     public String showPage(@ModelAttribute("model") ModelMap model) {
@@ -38,7 +38,7 @@ public class EventGroupPageController {
 
     @GetMapping("/memberSearch.html")
     public String openSearch(@ModelAttribute("model") ModelMap model) {
-        model.addAttribute("memList", memService.getAllMembers());
+        model.addAttribute("memList", userService.getAllMembers());
         return "memberSearch";
 
     }

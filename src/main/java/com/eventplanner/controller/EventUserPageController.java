@@ -21,19 +21,28 @@ import org.springframework.web.bind.annotation.ModelAttribute;
  */
 @Controller
 public class EventUserPageController {
+
     @Autowired
-    private EventUserService memberService;
+    private EventUserService userService;
     @Autowired
     private EventGroupService groupService;
-    
+
     @GetMapping("/userPage")
-    public String showPage(@ModelAttribute("model") ModelMap model, Principal principal){
+    public String showPage(@ModelAttribute("model") ModelMap model, Principal principal) {
         String username = principal.getName();
-        EventUser member = memberService.findByUsername(username);
+        EventUser member = userService.findByUsername(username);
         model.addAttribute("groupList", member.getUserGroupList());
         model.addAttribute("username", member.getUsername());
         model.addAttribute("user", member);
         return "userPage";
     }
-    
+    @GetMapping("/adminPage")
+    public String showAdminPage(@ModelAttribute("model") ModelMap model, Principal principal) {
+        EventUser admin = userService.findByUsername(principal.getName());
+        
+        model.addAttribute("username", admin.getUsername());
+        model.addAttribute("groupList",admin.getUserGroupList());
+        return "adminPage";
+    }
+
 }
