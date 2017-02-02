@@ -13,6 +13,9 @@
                 <#if RequestParameters.logout??>
                     Logged Out
                 </#if>
+                <#if model.badUsername??>
+                    Successful Registration!
+                </#if>
                 <tr><td>User:</td><td><input type='text' id='username' name='username' value=''></td></tr>
                 <tr><td>Password:</td><td><input type='password' i='password' name='password'/></td></tr>
                 <tr><td><input name="submit" type="submit" value="Login"/></td></tr>

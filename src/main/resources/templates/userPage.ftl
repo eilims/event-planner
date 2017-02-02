@@ -12,7 +12,7 @@
                     username: username
                 }
                 $.ajax({
-                    url: "/user/removeMember",
+                    url: "/user/leaveEvent",
                     type: "post",
                     data: data,
                     headers: csrf,
@@ -28,7 +28,7 @@
                     username: username
                 }
                 $.ajax({
-                    url: "",
+                    url: "/user/leaveGroup",
                     type: "post",
                     data: data,
                     headers: csrf,
@@ -49,7 +49,7 @@
         <#list model.groupList as group>
             <table id="${group.groupName}">
                 <ol>
-                    <tr><td><input type="button" value="Leave Group" onClick=""/></td></tr>
+                    <tr><td><input type="button" value="Leave Group" onClick="leaveGroup(${group.groupId}, "${model.username}")"/></td></tr>
                     <tr> <th>Group Name:</th><td>${group.groupName}</td></tr>
                     <tr><th>Members:</th></tr>
                     <#list group.getGroupMemberList() as member>

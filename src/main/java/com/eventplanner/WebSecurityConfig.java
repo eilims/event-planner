@@ -37,7 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         */
         http
                 .authorizeRequests()
-                    .antMatchers("/register/**", "/user/createMember")
+                    .antMatchers("/register/**")
                     .permitAll()
                     .antMatchers("/admin/**")
                     .hasAuthority("ADMIN")

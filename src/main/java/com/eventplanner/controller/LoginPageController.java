@@ -25,17 +25,17 @@ public class LoginPageController {
     private EventUserService userService;
 
     @GetMapping("/login")
-    public String showPage(ModelMap model) {
+    public String showPage(@ModelAttribute("model") ModelMap model) {
         return "login";
     }
 
     @GetMapping("/register/user")
-    public String showUserRegisterPage() {
+    public String showUserRegisterPage(@ModelAttribute("model") ModelMap model) {
         return "user";
     }
 
     @GetMapping("/register/admin")
-    public String showAdminRegisterPage() {
+    public String showAdminRegisterPage(@ModelAttribute("model") ModelMap model) {
         return "admin";
     }
 
