@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author DanielB
  */
 @Controller
-@RequestMapping("/admin")
 public class EventGroupPageController {
 
     @Autowired
@@ -31,14 +30,14 @@ public class EventGroupPageController {
     @Autowired
     private EventUserService userService;
 
-    @GetMapping("/groups.html")
+    @GetMapping("/developer/groups.html")
     public String showPage(@ModelAttribute("model") ModelMap model, Principal principal) {
         model.addAttribute("username", principal.getName());
         model.addAttribute("groupList", groupService.getAllGroups());
         return "groups";
     }
 
-    @GetMapping("/memberSearch.html")
+    @GetMapping("/admin/memberSearch.html")
     public String openSearch(@ModelAttribute("model") ModelMap model) {
         model.addAttribute("memList", userService.getAllMembers());
         return "memberSearch";
