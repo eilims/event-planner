@@ -41,7 +41,7 @@ public class EventGroup implements Serializable {
 
     @ManyToMany
     @JsonBackReference
-    private List<EventUser> adminList;
+    private List<EventUser> groupAdminList;
     
     /*
     Group has many incoming events, but events belong to one group => OneToMany
@@ -52,11 +52,12 @@ public class EventGroup implements Serializable {
     @JsonManagedReference
     private List<Event> eventList;
 
-    public EventGroup(String name) {
+    public EventGroup(String name, EventUser admin) {
         //TODO add initial admin upon instantiation
         this.name = name;
         this.groupMemberList = new ArrayList();
-        this.adminList = new ArrayList();
+        this.groupAdminList = new ArrayList();
+        this.groupAdminList.add(admin);
         this.eventList = new ArrayList();
     }
 
@@ -85,11 +86,11 @@ public class EventGroup implements Serializable {
     }
 
     public List<EventUser> getGroupAdminList() {
-        return adminList;
+        return groupAdminList;
     }
 
     public void setGroupAdminList(List<EventUser> adminList) {
-        this.adminList = adminList;
+        this.groupAdminList = adminList;
     }
 
     public List<Event> getGroupEventList() {

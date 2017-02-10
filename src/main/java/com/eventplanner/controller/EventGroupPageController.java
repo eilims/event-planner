@@ -8,6 +8,7 @@ package com.eventplanner.controller;
 import com.eventplanner.service.EventGroupService;
 import com.eventplanner.service.EventUserService;
 import com.eventplanner.service.EventService;
+import java.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -31,7 +32,8 @@ public class EventGroupPageController {
     private EventUserService userService;
 
     @GetMapping("/groups.html")
-    public String showPage(@ModelAttribute("model") ModelMap model) {
+    public String showPage(@ModelAttribute("model") ModelMap model, Principal principal) {
+        model.addAttribute("username", principal.getName());
         model.addAttribute("groupList", groupService.getAllGroups());
         return "groups";
     }

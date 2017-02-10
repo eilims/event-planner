@@ -27,7 +27,7 @@ public class EventUserPageController {
     @Autowired
     private EventGroupService groupService;
 
-    @GetMapping("/userPage")
+    @GetMapping("/user/userPage")
     public String showPage(@ModelAttribute("model") ModelMap model, Principal principal) {
         String username = principal.getName();
         EventUser member = userService.findByUsername(username);
@@ -36,12 +36,12 @@ public class EventUserPageController {
         model.addAttribute("user", member);
         return "userPage";
     }
-    @GetMapping("/adminPage")
+
+    @GetMapping("/admin/adminPage")
     public String showAdminPage(@ModelAttribute("model") ModelMap model, Principal principal) {
         EventUser admin = userService.findByUsername(principal.getName());
-        
         model.addAttribute("username", admin.getUsername());
-        model.addAttribute("groupList",admin.getUserGroupList());
+        model.addAttribute("groupList", admin.getUserAdminList());
         return "adminPage";
     }
 

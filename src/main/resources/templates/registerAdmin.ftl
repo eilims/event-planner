@@ -28,9 +28,6 @@
         </script>
     </head>
     <body>
-            <#if model.registrtion == true>
-            yay
-            </#if>
             Username: <input name="username" id="username" type="text" required/>
             Password: <input name="password" id="password" type="password" required/>
             Email: <input name="email" id="email" type="text" required/>

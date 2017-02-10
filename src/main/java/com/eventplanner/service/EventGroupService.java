@@ -29,9 +29,9 @@ public class EventGroupService {
     /*
         createGroup ensures that no duplicate named groups are possible
      */
-    public EventGroup createGroup(String name) {
+    public EventGroup createGroup(String name, String username) {
         if (groupRepo.findByName(name) == null) {
-            return groupRepo.save(new EventGroup(name));
+            return groupRepo.save(new EventGroup(name, userService.findByUsername(username)));
         }
         return null;
     }
@@ -82,6 +82,24 @@ public class EventGroupService {
     public EventGroup removeMember(Integer groupId, String name) {
         EventGroup group = groupRepo.findOne(groupId);
         group.getGroupMemberList().remove(userService.findByUsername(name));
+        groupRepo.save(group);
+        return group;
+    }
+
+    public EventGroup addAdmin(Integer groupId, String name) {
+        EventGroup group = groupRepo.findOne(groupId);
+        EventUser user = userService.findByUsername(name);
+        if (user.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN"))
+                && !group.getGroupAdminList().contains(user)) {
+            group.getGroupAdminList().add(user);
+        }
+        groupRepo.save(group);
+        return group;
+    }
+
+    public EventGroup removeAdmin(Integer groupId, String name) {
+        EventGroup group = groupRepo.findOne(groupId);
+        group.getGroupAdminList().remove(userService.findByUsername(name));
         groupRepo.save(group);
         return group;
     }

@@ -31,12 +31,12 @@ public class LoginPageController {
 
     @GetMapping("/register/user")
     public String showUserRegisterPage(@ModelAttribute("model") ModelMap model) {
-        return "user";
+        return "registerUser";
     }
 
     @GetMapping("/register/admin")
     public String showAdminRegisterPage(@ModelAttribute("model") ModelMap model) {
-        return "admin";
+        return "registerAdmin";
     }
 
     @GetMapping("/home")

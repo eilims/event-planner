@@ -26,10 +26,11 @@ import org.springframework.security.core.userdetails.UserDetails;
  */
 @Entity
 public class EventUser implements UserDetails {
+
     /*
     Implements UserDetails to ensure proper interface and later conversion
     to spring security and Spring security User
-    */
+     */
     @Id
     @GeneratedValue
     private Integer id;
@@ -42,11 +43,11 @@ public class EventUser implements UserDetails {
 
     @Column
     private String email;
-    
+
     /*
     Note enabled, account**, and credentials**, and not currently 
     used in this build. Perhaps later when expansions and transactions are made.
-    */
+     */
     @Column
     private boolean enabled;
 
@@ -65,7 +66,7 @@ public class EventUser implements UserDetails {
     /*
     Users hold the majority of the references, as they can exists without
     groups or events, so the managed references are held here
-    */
+     */
     @ManyToMany(mappedBy = "eventMemberList")
     @JsonManagedReference
     private List<Event> userEventList;
@@ -73,6 +74,10 @@ public class EventUser implements UserDetails {
     @ManyToMany(mappedBy = "groupMemberList")
     @JsonManagedReference
     private List<EventGroup> userGroupList;
+
+    @ManyToMany(mappedBy = "groupAdminList")
+    @JsonManagedReference
+    private List<EventGroup> userAdminList;
 
     public EventUser(String username, String password, String email, String role) {
         this.username = username;
@@ -179,6 +184,14 @@ public class EventUser implements UserDetails {
 
     public void setUserGroupList(List<EventGroup> groupList) {
         this.userGroupList = groupList;
+    }
+
+    public List<EventGroup> getUserAdminList() {
+        return userAdminList;
+    }
+
+    public void setUserAdminList(List<EventGroup> userAdminList) {
+        this.userAdminList = userAdminList;
     }
 
 }

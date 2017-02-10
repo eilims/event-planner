@@ -10,7 +10,7 @@
     </script>
     <body>
         <#if model.auth == "USER">
-        <form id="user" action="/userPage.html" method="Get">
+        <form id="user" action="/user/userPage.html" method="Get">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>		
         </form>  
         <script>
@@ -18,7 +18,7 @@
         </script>
         </#if>
         <#if model.auth == "ADMIN">
-        <form id="admin" action="/admin/groups.html" method="Get">
+        <form id="admin" action="/admin/adminPage.html" method="Get">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>		
         </form>  
         <script>

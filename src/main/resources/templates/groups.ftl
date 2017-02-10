@@ -3,12 +3,13 @@
     <head>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script>
-            function createGroup(){
+            function createGroup(username){
                 var csrf = {
                     "${_csrf.headerName?js_string}" : "${_csrf.token?js_string}"
                 }
                 var group = {
                     name: document.getElementById("groupName").value,
+                    username: username
                 }
                 $.ajax({
                     url: "/admin/group/createGroup",
@@ -148,7 +149,7 @@
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>		
             </form>  
             Group Name:<input type="text" id="groupName"/>
-            <input type="button" value="Save" onClick="createGroup()"/>
+            <input type="button" value="Save" onClick="createGroup('${model.username}')"/>
         <ol>
             <#list model.groupList as group>
             <li>

@@ -47,5 +47,7 @@ public class EventUserController {
         groupService.removeMember(groupId, username);
         return null;
     }
+    
+    
 
 }
