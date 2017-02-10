@@ -3,7 +3,7 @@
     <head>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script>
-        function removeMember(eventId, username){
+        function leaveEvent(eventId, username){
                 var csrf = {
                     "${_csrf.headerName?js_string}" : "${_csrf.token?js_string}"
                 }
@@ -12,13 +12,29 @@
                     username: username
                 }
                 $.ajax({
-                    url: "/user/removeMember",
+                    url: "/user/leaveEvent",
                     type: "post",
                     data: data,
                     headers: csrf,
                     complete: completeCallBack
                 });
             }
+        function leaveGroup(groupId, username){
+            var csrf = {
+                    "${_csrf.headerName?js_string}" : "${_csrf.token?js_string}"
+                }
+                var data = {
+                    groupId: groupId,
+                    username: username
+                }
+                $.ajax({
+                    url: "/user/leaveGroup",
+                    type: "post",
+                    data: data,
+                    headers: csrf,
+                    complete: completeCallBack
+                });
+        }
             function completeCallBack(){
                 location.reload();
             }
@@ -33,6 +49,7 @@
         <#list model.groupList as group>
             <table id="${group.groupName}">
                 <ol>
+                    <tr><td><input type="button" value="Leave Group" onClick="leaveGroup(${group.groupId}, "${model.username}")"/></td></tr>
                     <tr> <th>Group Name:</th><td>${group.groupName}</td></tr>
                     <tr><th>Members:</th></tr>
                     <#list group.getGroupMemberList() as member>
@@ -60,7 +77,7 @@
                                         <tr id="${member.username}"><th></th><td>${member.username}</td></tr>
                                 </#list>
                             </ol>
-                            <tr><td><input type="button" value="I can't go" onClick="removeMember(${event.eventId},'${model.username}')"/></td></tr>
+                            <tr><td><input type="button" value="I can't go" onClick="leaveEvent(${event.eventId},'${model.username}')"/></td></tr>
                             </table>
                         </#if>
                     </#list>

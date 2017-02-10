@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-    <head>
+<head>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script>
             function createGroup(username){
@@ -74,7 +74,7 @@
                     complete: completeCallBack
                 });
             }
-            function addMember(eventId){
+            function addEventMember(eventId){
                 var csrf = {
                     "${_csrf.headerName?js_string}" : "${_csrf.token?js_string}"
                 }
@@ -90,7 +90,7 @@
                     complete: completeCallBack
                 });
             }
-            function removeMember(eventId, username){
+            function removeEventMember(eventId, username){
                 var csrf = {
                     "${_csrf.headerName?js_string}" : "${_csrf.token?js_string}"
                 }
@@ -138,6 +138,38 @@
                     complete: completeCallBack
                 });
             }  
+            function addGroupAdmin(groupName, groupId, username){
+                var csrf = {
+                    "${_csrf.headerName?js_string}" : "${_csrf.token?js_string}"
+                }
+                var data = {
+                    groupId: groupId,
+                    username: document.getElementById(groupName).rows.namedItem("adminRow").cells.namedItem("adminCell").children[0].value
+                }
+                $.ajax({
+                    url: "/admin/group/addAdmin",
+                    type: "post",
+                    data: data,
+                    headers: csrf,
+                    complete: completeCallBack
+                });
+            }
+            function removeGroupAdmin(groupId, username){
+                var csrf = {
+                    "${_csrf.headerName?js_string}" : "${_csrf.token?js_string}"
+                }
+                var data = {
+                    groupId: groupId,
+                    username: username
+                }
+                $.ajax({
+                    url: "/admin/group/removeAdmin",
+                    type: "post",
+                    data: data,
+                    headers: csrf,
+                    complete: completeCallBack
+                });
+            }  
             function completeCallBack(){
                 location.reload();
             }
@@ -156,6 +188,10 @@
                 <b>Group Name: </b>${group.groupName?html}
                 <input type="button" value="Delete Group" onClick="deleteGroup(${group.groupId})"/>
                     <table id="${group.groupName}">
+                        <tr id="adminRow">
+                            <th><b> Admin Username: </b></th><td id="adminCell"><input type="text" id="adminUsername" name="adminUsername"/></td>
+                            <td><input type="button" value="Add Admin" onClick="addGroupAdmin('${group.groupName}', ${group.groupId})"/></td>
+                        </tr>
                         <tr id="usernameRow">
                             <th><b>Member Username: </b></th><td id="usernameCell"><input type="text" id="memberUsername" name="memberUsername"/></td>
                         <td><input type="button" value="Add Member" onClick="addGroupMember('${group.groupName}', ${group.groupId})"/></td>
@@ -200,12 +236,12 @@
                             <tr><th><b>Location: </b></th><td>${event.location?html}</td></tr>
                             </br>
                             <tr id="usernameRow"><th><b>Member Username: </b></th><td id="usernameCell"><input type="text" id="memberUsername" name="memberUsername"/></td>
-                            <td><input type="button" value="Add Member" onClick="addMember(${event.eventId})"/></td> </tr>
+                            <td><input type="button" value="Add Member" onClick="addEventMember(${event.eventId})"/></td> </tr>
                             <ol>
                                 <#list event.getEventMemberList() as member>
                                     <li>
                                         <tr id="member.username"><th><b>Member: </b></th><td>${member.username}</td>
-                                        <td><input type="button" value="Remove Member" onClick="removeMember(${event.eventId},'${member.username}')"/></td></tr>
+                                        <td><input type="button" value="Remove Member" onClick="removeEventMember(${event.eventId},'${member.username}')"/></td></tr>
                                     </li>
                                 </#list>
                             </ol>

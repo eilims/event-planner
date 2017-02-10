@@ -6,35 +6,41 @@
 package com.eventplanner.service;
 
 import com.eventplanner.domain.EventUser;
-import com.eventplanner.repo.EventMemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import com.eventplanner.repo.EventUserRepository;
 
 /**
  *
  * @author DanielB
  */
 @Service
-public class EventMemberDetailsService implements UserDetailsService {
+public class EventUserDetailsService implements UserDetailsService {
     @Autowired
-    private EventMemberRepository memberRepo;
+    private EventUserRepository userRepo;
 
+    /*
+    Implements UserDetailsService to ensure proper interface with spring security
+    */
     @Override
     public UserDetails loadUserByUsername(String string) throws UsernameNotFoundException {
-        if (memberRepo.findByUsername(string) != null) {
-            return buildUser(memberRepo.findByUsername(string));
+        if (userRepo.findByUsername(string) != null) {
+            return buildUser(userRepo.findByUsername(string));
         }
         throw new UsernameNotFoundException("User not found");
     }
-
-    public User buildUser(EventUser member) {
-        return new User(member.getUsername(),
-                member.getPassword(),
+    
+    /*
+    Converts EventUser into Spring security User
+    */
+    public User buildUser(EventUser user) {
+        return new User(user.getUsername(),
+                user.getPassword(),
                 true, true, true, true,
-                member.getAuthorities());
+                user.getAuthorities());
     }
 }

@@ -26,8 +26,8 @@ public class EventGroupController {
 
     @PostMapping("/createGroup")
     @ResponseBody
-    public EventGroup createGroup(String name) {
-        return groupService.createGroup(name);
+    public EventGroup createGroup(String name, String username) {
+        return groupService.createGroup(name, username);
     }
 
     @PostMapping("/deleteGroup")
@@ -59,5 +59,17 @@ public class EventGroupController {
     @ResponseBody
     public EventGroup removeMember(Integer groupId, String username) {
         return groupService.removeMember(groupId, username);
+    }
+
+    @PostMapping("/addAdmin")
+    @ResponseBody
+    public EventGroup addAdmin(Integer groupId, String username) {
+        return groupService.addAdmin(groupId, username);
+    }
+
+    @PostMapping("/removeAdmin")
+    @ResponseBody
+    public EventGroup removeAdmin(Integer groupId, String username) {
+        return groupService.removeAdmin(groupId, username);
     }
 }

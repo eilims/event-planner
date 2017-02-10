@@ -14,5 +14,5 @@ import org.springframework.data.repository.CrudRepository;
  * @author DanielB
  */
 public interface EventRepository extends CrudRepository<Event, Integer> {
-    Event findByIdAndEventGroup(Integer id, EventGroup eventGroup);
+    Event findByNameAndEventGroup(String name, EventGroup eventGroup);
 }

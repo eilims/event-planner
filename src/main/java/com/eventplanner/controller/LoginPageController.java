@@ -5,9 +5,14 @@
  */
 package com.eventplanner.controller;
 
+import com.eventplanner.service.EventUserService;
+import java.security.Principal;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 /**
  *
@@ -16,19 +21,33 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class LoginPageController {
 
+    @Autowired
+    private EventUserService userService;
+
     @GetMapping("/login")
-    public String showPage(ModelMap model) {
+    public String showPage(@ModelAttribute("model") ModelMap model) {
         return "login";
     }
 
     @GetMapping("/register/user")
-    public String showUserRegisterPage(){
-        return "user";
+    public String showUserRegisterPage(@ModelAttribute("model") ModelMap model) {
+        return "registerUser";
     }
-    
+
     @GetMapping("/register/admin")
-    public String showAdminRegisterPage(){
-        return "admin";
+    public String showAdminRegisterPage(@ModelAttribute("model") ModelMap model) {
+        return "registerAdmin";
+    }
+
+    @GetMapping("/home")
+    public String showHomePage(@ModelAttribute("model") ModelMap model, Principal principal) {
+        String username = principal.getName();
+        if (userService.findByUsername(username).getAuthorities().contains(new SimpleGrantedAuthority("USER"))) {
+            model.addAttribute("auth", "USER");
+        } else {
+            model.addAttribute("auth", "ADMIN");
+        }
+        return "home";
     }
 
 }
