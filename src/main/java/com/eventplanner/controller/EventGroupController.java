@@ -49,10 +49,15 @@ public class EventGroupController {
         return groupService.findGroupByName(name);
     }
 
+    /*
+    Boolean for verification
+    True => successful add
+    False => unsuccessful
+     */
     @PostMapping("/addMember")
     @ResponseBody
-    public EventGroup addMember(Integer groupId, String username) {
-        return groupService.addMember(groupId, username);
+    public boolean addMember(Integer groupId, String username) {
+        return groupService.addMember(groupId, username) != null;
     }
 
     @PostMapping("/removeMember")
@@ -61,10 +66,15 @@ public class EventGroupController {
         return groupService.removeMember(groupId, username);
     }
 
+    /*
+    Boolean for verification
+    True => successful add
+    False => unsuccessful
+     */
     @PostMapping("/addAdmin")
     @ResponseBody
-    public EventGroup addAdmin(Integer groupId, String username) {
-        return groupService.addAdmin(groupId, username);
+    public boolean addAdmin(Integer groupId, String username) {
+        return groupService.addAdmin(groupId, username) != null;
     }
 
     @PostMapping("/removeAdmin")

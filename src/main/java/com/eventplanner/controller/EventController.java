@@ -7,7 +7,9 @@ package com.eventplanner.controller;
 
 import com.eventplanner.domain.Event;
 import com.eventplanner.service.EventService;
+
 import java.time.LocalDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +19,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- *
  * @author DanielB
  */
 @RestController
@@ -31,8 +32,8 @@ public class EventController {
     @PostMapping("/createEvent")
     @ResponseBody //Sending data back
     public Event createEvent(String name, Integer groupId, String description, String location,
-            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime startDate,
-            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime endDate) {
+                             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime startDate,
+                             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime endDate) {
         return eventService.createEvent(name, groupId, description, location,
                 LocalDateTime.parse(startDate + ":00"), LocalDateTime.parse(endDate + ":00"));
     }
@@ -42,14 +43,19 @@ public class EventController {
         eventService.deleteEvent(eventId);
         return null;
     }
-    
+
+    /*
+    Boolean for verification
+    True => successful add
+    False => unsuccessful
+     */
     @PostMapping("/addMember")
-    public Event addMember(Integer eventId, String username){
-        return eventService.addMember(eventId, username);
+    public boolean addMember(Integer eventId, String username) {
+        return eventService.addMember(eventId, username) != null;
     }
-    
+
     @PostMapping("/removeMember")
-    public Event removeMember(Integer eventId, String username){
+    public Event removeMember(Integer eventId, String username) {
         return eventService.removeMember(eventId, username);
     }
 }

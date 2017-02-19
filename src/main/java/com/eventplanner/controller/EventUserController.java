@@ -28,10 +28,15 @@ public class EventUserController {
     @Autowired
     private EventGroupService groupService;
 
+    /*
+    Method is boolean to ensure user creation
+    True implies a created user
+    False implies the username is already in use
+     */
     @PostMapping("/register/createMember")
     @ResponseBody
-    public EventUser createMember(String username, String password, String email, String role) {
-        return userService.createMember(username, password, email, role);
+    public boolean createMember(String username, String password, String email, String role) {
+        return userService.createMember(username, password, email, role) != null;
     }
 
     @PostMapping("/user/leaveEvent")
@@ -43,11 +48,9 @@ public class EventUserController {
     
     @PostMapping("/user/leaveGroup")
     @ResponseBody
-    public EventUser leaveGroup(Integer groupId, String username){
+    public EventUser leaveGroup(Integer groupId, String username) {
         groupService.removeMember(groupId, username);
         return null;
     }
-    
-    
 
 }

@@ -3,183 +3,18 @@
 <head>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script>
-            function createGroup(username){
-                var csrf = {
-                    "${_csrf.headerName?js_string}" : "${_csrf.token?js_string}"
-                }
-                var group = {
-                    name: document.getElementById("groupName").value,
-                    username: username
-                }
-                $.ajax({
-                    url: "/admin/group/createGroup",
-                    type: "post",
-                    data: group,
-                    headers: csrf,
-                    complete: completeCallBack
-                });
-            }
-                
-            function deleteGroup(groupId){
-                var csrf = {
-                    "${_csrf.headerName?js_string}" : "${_csrf.token?js_string}"
-                }
-                var group = {
-                    eventGroupId: groupId
-                }
-                $.ajax({
-                    url: "/admin/group/deleteGroup",
-                    type: "post",
-                    data: group,
-                    headers: csrf,          
-                    complete: completeCallBack
-                });
-            }
-            function createEvents(groupName, groupId) {
-                var csrf = {
-                    "${_csrf.headerName?js_string}" : "${_csrf.token?js_string}"
-                }
-                var event = {
-                    name: document.getElementById(groupName).rows.namedItem("nameRow").cells.namedItem("nameCell").children[0].value,
-                    groupId: groupId,
-                    description: document.getElementById(groupName).rows.namedItem("desRow").cells.namedItem("desCell").children[0].value,
-                    location: document.getElementById(groupName).rows.namedItem("locRow").cells.namedItem("locCell").children[0].value,
-                    startDate: document.getElementById(groupName).rows.namedItem("strRow").cells.namedItem("strCell").children[0].value,
-                    endDate: document.getElementById(groupName).rows.namedItem("endRow").cells.namedItem("endCell").children[0].value,
-                }
-                if (event.name == "" || event.description == "" || event.location == "" || startDate == "" || endDate == "") {
-                    alert("Please fill out all fields");
-                    return;
-                }
-                $.ajax({
-                    url: "/admin/event/createEvent",
-                    type: "post",
-                    data: event,
-                    headers: csrf,            
-                    complete: completeCallBack
-                });
-            }
-            function deleteEvent(eventId){
-                var csrf = {
-                    "${_csrf.headerName?js_string}" : "${_csrf.token?js_string}"
-                }
-                var event = {
-                    eventId: eventId
-                }
-                $.ajax({
-                    url: "/admin/event/deleteEvent",
-                    type: "post",
-                    data: event,
-                    headers: csrf,            
-                    complete: completeCallBack
-                });
-            }
-            function addEventMember(eventId){
-                var csrf = {
-                    "${_csrf.headerName?js_string}" : "${_csrf.token?js_string}"
-                }
-                var data = {
-                    eventId: eventId,
-                    username: document.getElementById(eventId).rows.namedItem("usernameRow").cells.namedItem("usernameCell").children[0].value
-                }
-                $.ajax({
-                    url: "/admin/event/addMember",
-                    type: "post",
-                    data: data,
-                    headers: csrf,
-                    complete: completeCallBack
-                });
-            }
-            function removeEventMember(eventId, username){
-                var csrf = {
-                    "${_csrf.headerName?js_string}" : "${_csrf.token?js_string}"
-                }
-                var data = {
-                    eventId: eventId,
-                    username: username
-                }
-                $.ajax({
-                    url: "/admin/event/removeMember",
-                    type: "post",
-                    data: data,
-                    headers: csrf,
-                    complete: completeCallBack
-                });
-            }    
-            function addGroupMember(groupName, groupId, username){
-                var csrf = {
-                    "${_csrf.headerName?js_string}" : "${_csrf.token?js_string}"
-                }
-                var data = {
-                    groupId: groupId,
-                    username: document.getElementById(groupName).rows.namedItem("usernameRow").cells.namedItem("usernameCell").children[0].value
-                }
-                $.ajax({
-                    url: "/admin/group/addMember",
-                    type: "post",
-                    data: data,
-                    headers: csrf,
-                    complete: completeCallBack
-                });
-            }
-            function removeGroupMember(groupId, username){
-                var csrf = {
-                    "${_csrf.headerName?js_string}" : "${_csrf.token?js_string}"
-                }
-                var data = {
-                    groupId: groupId,
-                    username: username
-                }
-                $.ajax({
-                    url: "/admin/group/removeMember",
-                    type: "post",
-                    data: data,
-                    headers: csrf,
-                    complete: completeCallBack
-                });
-            }  
-            function addGroupAdmin(groupName, groupId, username){
-                var csrf = {
-                    "${_csrf.headerName?js_string}" : "${_csrf.token?js_string}"
-                }
-                var data = {
-                    groupId: groupId,
-                    username: document.getElementById(groupName).rows.namedItem("adminRow").cells.namedItem("adminCell").children[0].value
-                }
-                $.ajax({
-                    url: "/admin/group/addAdmin",
-                    type: "post",
-                    data: data,
-                    headers: csrf,
-                    complete: completeCallBack
-                });
-            }
-            function removeGroupAdmin(groupId, username){
-                var csrf = {
-                    "${_csrf.headerName?js_string}" : "${_csrf.token?js_string}"
-                }
-                var data = {
-                    groupId: groupId,
-                    username: username
-                }
-                $.ajax({
-                    url: "/admin/group/removeAdmin",
-                    type: "post",
-                    data: data,
-                    headers: csrf,
-                    complete: completeCallBack
-                });
-            }  
-            function completeCallBack(){
-                location.reload();
+            var csrf = {
+                "${_csrf.headerName?js_string}": "${_csrf.token?js_string}"
             }
         </script>
+    <script src="/js/adminPage.js"></script>
     </head>
     <body>
             <form action="/logout" method="POST">
                 <input type="submit" value="Logout"/>
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>		
-            </form>  
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            </form>
+            <div name="message"></div>
             Group Name:<input type="text" id="groupName"/>
             <input type="button" value="Save" onClick="createGroup('${model.username}')"/>
         <ol>

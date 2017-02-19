@@ -8,14 +8,15 @@ package com.eventplanner.service;
 import com.eventplanner.domain.EventGroup;
 import com.eventplanner.domain.EventUser;
 import com.eventplanner.repo.EventGroupRepository;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
 /**
- *
  * @author DanielB
  */
 @Service
@@ -68,15 +69,17 @@ public class EventGroupService {
     implements UserDetails and uses SPA. It is essentially a String container
     Method also checks for duplicates and prevents it
      */
-    public EventGroup addMember(Integer groupId, String name) {
+    public EventUser addMember(Integer groupId, String name) {
         EventGroup group = groupRepo.findOne(groupId);
         EventUser user = userService.findByUsername(name);
-        if (user.getAuthorities().contains(new SimpleGrantedAuthority("USER"))
-                && !group.getGroupMemberList().contains(user)) {
-            group.getGroupMemberList().add(user);
+        if (user != null) {
+            if (user.getAuthorities().contains(new SimpleGrantedAuthority("USER"))
+                    && !group.getGroupMemberList().contains(user)) {
+                group.getGroupMemberList().add(user);
+            }
+            groupRepo.save(group);
         }
-        groupRepo.save(group);
-        return group;
+        return user;
     }
 
     public EventGroup removeMember(Integer groupId, String name) {
@@ -86,15 +89,17 @@ public class EventGroupService {
         return group;
     }
 
-    public EventGroup addAdmin(Integer groupId, String name) {
+    public EventUser addAdmin(Integer groupId, String name) {
         EventGroup group = groupRepo.findOne(groupId);
         EventUser user = userService.findByUsername(name);
-        if (user.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN"))
-                && !group.getGroupAdminList().contains(user)) {
-            group.getGroupAdminList().add(user);
+        if (user != null) {
+            if (user.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN"))
+                    && !group.getGroupAdminList().contains(user)) {
+                group.getGroupAdminList().add(user);
+            }
+            groupRepo.save(group);
         }
-        groupRepo.save(group);
-        return group;
+        return user;
     }
 
     public EventGroup removeAdmin(Integer groupId, String name) {

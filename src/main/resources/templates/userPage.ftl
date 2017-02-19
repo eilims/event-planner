@@ -3,42 +3,11 @@
     <head>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script>
-        function leaveEvent(eventId, username){
-                var csrf = {
-                    "${_csrf.headerName?js_string}" : "${_csrf.token?js_string}"
-                }
-                var data = {
-                    eventId: eventId,
-                    username: username
-                }
-                $.ajax({
-                    url: "/user/leaveEvent",
-                    type: "post",
-                    data: data,
-                    headers: csrf,
-                    complete: completeCallBack
-                });
-            }
-        function leaveGroup(groupId, username){
             var csrf = {
-                    "${_csrf.headerName?js_string}" : "${_csrf.token?js_string}"
-                }
-                var data = {
-                    groupId: groupId,
-                    username: username
-                }
-                $.ajax({
-                    url: "/user/leaveGroup",
-                    type: "post",
-                    data: data,
-                    headers: csrf,
-                    complete: completeCallBack
-                });
+                "${_csrf.headerName?js_string}": "${_csrf.token?js_string}"
         }
-            function completeCallBack(){
-                location.reload();
-            }
         </script>
+        <script src="/js/userPage.js"></script>
     </head>
     <body>
         <form action="/logout" method="POST">
@@ -49,8 +18,14 @@
         <#list model.groupList as group>
             <table id="${group.groupName}">
                 <ol>
-                    <tr><td><input type="button" value="Leave Group" onClick="leaveGroup(${group.groupId}, "${model.username}")"/></td></tr>
-                    <tr> <th>Group Name:</th><td>${group.groupName}</td></tr>
+                    <tr>
+                        <td><input type="button" value="Leave Group"
+                                   onClick="leaveGroup(${group.groupId}, '${model.username}')"/></td>
+                    </tr>
+                    <tr>
+                        <th>Group Name:</th>
+                        <td>${group.groupName}</td>
+                    </tr>
                     <tr><th>Members:</th></tr>
                     <#list group.getGroupMemberList() as member>
                         
