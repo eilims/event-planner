@@ -22,6 +22,9 @@ import com.eventplanner.repo.EventUserRepository;
 public class EventUserService {
 
     @Autowired
+    private EmailService emailService;
+
+    @Autowired
     private EventUserRepository userRepo;
     /*
     PasswordEncoder encypts password using BCrypt more can be found in UserDetailsService
@@ -35,6 +38,7 @@ public class EventUserService {
     */
     public EventUser createMember(String username, String password, String email, String role) {
         if (userRepo.findByUsername(username) == null) {
+            emailService.sendVerificationEmail(email);
             return userRepo.save(new EventUser(username, passwordEncoder.encode(password), email, role));
         }
         return null;
