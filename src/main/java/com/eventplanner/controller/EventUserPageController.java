@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 
 /**
  *
@@ -45,4 +46,15 @@ public class EventUserPageController {
         return "adminPage";
     }
 
+    @GetMapping("/register/{id}")
+    public String showConfirmationPage(@ModelAttribute("model") ModelMap model, @PathVariable Integer id) {
+        EventUser user = userService.findById(id);
+        if (user != null && !user.isEnabled()) {
+            user.setEnabled(true);
+            return "confirmation";
+        } else {
+            return "bad_confirmation";
+        }
+
+    }
 }

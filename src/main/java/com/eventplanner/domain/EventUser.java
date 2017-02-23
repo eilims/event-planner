@@ -83,7 +83,7 @@ public class EventUser implements UserDetails {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.enabled = true;
+        this.enabled = false;
         this.accountNonExpired = true;
         this.accountNonLocked = true;
         this.credentialsNonExpired = true;

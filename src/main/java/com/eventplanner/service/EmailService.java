@@ -14,22 +14,22 @@ import javax.mail.internet.MimeMessage;
 @Service
 public class EmailService {
     @Autowired
-    private JavaMailSender mailSender;
+    private JavaMailSender javaMailSender;
 
-    public boolean sendVerificationEmail(String email) {
-        MimeMessage mail = mailSender.createMimeMessage();
+    public boolean sendVerificationEmail(EventUser user) {
+        MimeMessage mail = javaMailSender.createMimeMessage();
         try {
             MimeMessageHelper helper = new MimeMessageHelper(mail, true);
-            helper.setTo(email);
+            helper.setTo(user.getEmail());
             helper.setReplyTo("SimplePlannerEmail@gmail.com");
             helper.setFrom("SimplePlannerEmail@gmail.com");
             helper.setSubject("SimplePlanner User Verification");
-            helper.setText("This works!");
+            helper.setText("Visit this link to activate your account: http://localhost:8080/register/" + user.getId());
         } catch (MessagingException e) {
             e.printStackTrace();
             return false;
         }
-        mailSender.send(mail);
+        javaMailSender.send(mail);
         return true;
     }
 

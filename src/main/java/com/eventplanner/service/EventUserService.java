@@ -38,8 +38,10 @@ public class EventUserService {
     */
     public EventUser createMember(String username, String password, String email, String role) {
         if (userRepo.findByUsername(username) == null) {
-            emailService.sendVerificationEmail(email);
-            return userRepo.save(new EventUser(username, passwordEncoder.encode(password), email, role));
+            EventUser user = new EventUser(username, passwordEncoder.encode(password), email, role);
+            userRepo.save(user);
+            emailService.sendVerificationEmail(user);
+            return user;
         }
         return null;
     }
@@ -52,6 +54,10 @@ public class EventUserService {
 
     public EventUser findByUsername(String name) {
         return userRepo.findByUsername(name);
+    }
+
+    public EventUser findById(Integer id) {
+        return userRepo.findOne(id);
     }
 
     /*
