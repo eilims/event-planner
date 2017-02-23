@@ -34,7 +34,7 @@ function createEvents(groupName, groupId) {
         description: document.getElementById(groupName).rows.namedItem("desRow").cells.namedItem("desCell").children[0].value,
         location: document.getElementById(groupName).rows.namedItem("locRow").cells.namedItem("locCell").children[0].value,
         startDate: document.getElementById(groupName).rows.namedItem("strRow").cells.namedItem("strCell").children[0].value,
-        endDate: document.getElementById(groupName).rows.namedItem("endRow").cells.namedItem("endCell").children[0].value,
+        endDate: document.getElementById(groupName).rows.namedItem("endRow").cells.namedItem("endCell").children[0].value
     };
     if (event.name == "" || event.description == "" || event.location == "" || startDate == "" || endDate == "") {
         alert("Please fill out all fields");
@@ -86,7 +86,7 @@ function removeEventMember(eventId, username) {
         success: successCallBack
     });
 }
-function addGroupMember(groupName, groupId, username) {
+function addGroupMember(groupName, groupId) {
     var data = {
         groupId: groupId,
         username: document.getElementById(groupName).rows.namedItem("usernameRow").cells.namedItem("usernameCell").children[0].value
@@ -112,7 +112,7 @@ function removeGroupMember(groupId, username) {
         success: successCallBack
     });
 }
-function addGroupAdmin(groupName, groupId, username) {
+function addGroupAdmin(groupName, groupId) {
     var data = {
         groupId: groupId,
         username: document.getElementById(groupName).rows.namedItem("adminRow").cells.namedItem("adminCell").children[0].value
@@ -132,6 +132,18 @@ function removeGroupAdmin(groupId, username) {
     };
     $.ajax({
         url: "/admin/group/removeAdmin",
+        type: "post",
+        data: data,
+        headers: csrf,
+        success: successCallBack
+    });
+}
+function resendEmail(id) {
+    var data = {
+        id: id
+    };
+    $.ajax({
+        url: "/register/resendEmail",
         type: "post",
         data: data,
         headers: csrf,

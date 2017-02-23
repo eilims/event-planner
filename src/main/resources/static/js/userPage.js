@@ -28,6 +28,18 @@ function leaveGroup(groupId, username) {
         success: successCallBack
     });
 }
+function resendEmail(id) {
+    var data = {
+        id: id
+    };
+    $.ajax({
+        url: "/register/resendEmail",
+        type: "post",
+        data: data,
+        headers: csrf,
+        success: successCallBack
+    });
+}
 function successCallBack(data) {
     /*
      Do other things here to display messages!

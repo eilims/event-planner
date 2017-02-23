@@ -6,8 +6,10 @@
 package com.eventplanner.service;
 
 import com.eventplanner.domain.EventUser;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,7 +17,6 @@ import org.springframework.stereotype.Service;
 import com.eventplanner.repo.EventUserRepository;
 
 /**
- *
  * @author DanielB
  */
 @Service
@@ -40,14 +41,14 @@ public class EventUserService {
         if (userRepo.findByUsername(username) == null) {
             EventUser user = new EventUser(username, passwordEncoder.encode(password), email, role);
             userRepo.save(user);
-            emailService.sendVerificationEmail(user);
+            sendVerificationEmail(user);
             return user;
         }
         return null;
     }
-    
-    public void deleteMember(Integer userId){
-        if(userRepo.exists(userId)){
+
+    public void deleteMember(Integer userId) {
+        if (userRepo.exists(userId)) {
             userRepo.delete(userId);
         }
     }
@@ -72,5 +73,24 @@ public class EventUserService {
             }
         });
         return memList;
+    }
+
+    public boolean checkEnabled(Integer id) {
+        return userRepo.findOne(id).isEnabled();
+    }
+
+    public boolean setUserEnabled(Integer id) {
+        EventUser user = userRepo.findOne(id);
+        if (user != null && !user.isEnabled()) {
+            user.setEnabled(true);
+            userRepo.save(user);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void sendVerificationEmail(EventUser user) {
+        emailService.sendVerificationEmail(user);
     }
 }

@@ -39,6 +39,20 @@ public class EventUserController {
         return userService.createMember(username, password, email, role) != null;
     }
 
+    @PostMapping("/register/resendEmail")
+    @ResponseBody
+    public boolean resendEmail(Integer id) {
+        userService.sendVerificationEmail(userService.findById(id));
+        return true;
+    }
+
+    @PostMapping("/register/setUserEnabled")
+    @ResponseBody
+    public boolean setUserEnabled(Integer id) {
+        userService.setUserEnabled(id);
+        return true;
+    }
+
     @PostMapping("/user/leaveEvent")
     @ResponseBody
     public EventUser leaveEvent(Integer eventId, String username) {
